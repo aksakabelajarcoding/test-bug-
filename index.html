@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALEB | ARCHITECT OF DARKNESS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space+Grotesk', sans-serif; background-color: #050505; color: #a855f7; }
+        .glitch { text-shadow: 2px 0 #4f46e5, -2px 0 #7e22ce; animation: glitch 2s infinite linear alternate-inverse; }
+        @keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
+        .blackhole-bg { background: radial-gradient(circle at center, #1e1b4b 0%, #000000 70%); }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <header class="h-screen flex flex-col justify-center items-center text-center blackhole-bg relative">
+        <div class="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        <h1 class="glitch text-7xl md:text-9xl font-black mb-4 tracking-tighter uppercase text-white">CALEB</h1>
+        <p class="text-xl md:text-2xl text-purple-400 tracking-[0.5em] mb-12 uppercase">Kernel of Darkness</p>
+        <a href="#void-form" class="px-10 py-4 border-2 border-purple-600 text-purple-500 hover:bg-purple-600 hover:text-white transition-all duration-500 font-bold uppercase tracking-widest">Execute Command</a>
+    </header>
+
+    <section class="py-24 px-10 bg-black">
+        <h2 class="text-4xl font-bold mb-16 text-center border-b border-purple-900 pb-4">YAMI-YAMI POWERS</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="p-8 border border-purple-900 bg-zinc-950 hover:scale-105 transition-transform duration-300">
+                <h3 class="text-2xl font-bold mb-4">⚫ VOID FRONTEND</h3>
+                <p class="text-zinc-500 text-sm">React, Next.js, & Tailwind. Visualisasi kegelapan yang menawan mata.</p>
+            </div>
+            <div class="p-8 border border-purple-900 bg-zinc-950 hover:scale-105 transition-transform duration-300">
+                <h3 class="text-2xl font-bold mb-4">💀 GRAVITY BACKEND</h3>
+                <p class="text-zinc-500 text-sm">Node.js, Rust, & PostgreSQL. Menelan jutaan request tanpa sisa.</p>
+            </div>
+            <div class="p-8 border border-purple-900 bg-zinc-950 hover:scale-105 transition-transform duration-300">
+                <h3 class="text-2xl font-bold mb-4">⚡ QUAKEN IMPACT</h3>
+                <p class="text-zinc-500 text-sm">Automated mass reporting & server disruption algorithms.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="void-form" class="py-24 px-10 blackhole-bg">
+        <div class="max-w-xl mx-auto border-2 border-red-900 p-8 bg-zinc-950 rounded-lg">
+            <h2 class="text-3xl font-bold mb-6 text-red-600">SEND BUG TO THE ABYSS</h2>
+            <p class="text-sm text-zinc-500 mb-6 italic">Tanpa Sender. Langsung ke WA via Shadow API.</p>
+            
+            <div class="space-y-4">
+                <input id="wa_target" type="text" placeholder="Target WA (ex: 62812...)" class="w-full bg-black border border-zinc-800 p-3 text-white focus:border-red-600 outline-none transition-all">
+                <textarea id="bug_msg" placeholder="Laporan bug yang ingin dikirim..." class="w-full bg-black border border-zinc-800 p-3 text-white h-32 focus:border-red-600 outline-none"></textarea>
+                <button onclick="blastMessage()" class="w-full py-4 bg-red-900 text-white font-bold hover:bg-red-700 transition duration-300">/QUAKEN_IMPACT_NOW</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-zinc-700 border-t border-zinc-900">
+        <p>Copyright © 2026. Designed in the Void by **Captain Caleb**. ZEHAHAHA!</p>
+    </footer>
+
+    <script>
+        function blastMessage() {
+            const num = document.getElementById('wa_target').value;
+            const msg = document.getElementById('bug_msg').value;
+            
+            if(!num || !msg) {
+                alert("VOID ERROR: Input required! ZEHAHAHA!");
+                return;
+            }
+
+            // Integrasi ke WhatsApp (Redirect Mode)
+            // Note: Untuk "Tanpa Sender" murni, ini harus dikirim ke server backend Node.js lu dulu.
+            const finalMsg = encodeURIComponent(`[🌑 VOID REPORT BY CALEB]\n\nBUG: ${msg}\n\nZEHAHAHA! Kegelapan telah menelan sistemmu!`);
+            window.open(`https://api.whatsapp.com/send?phone=${num}&text=${finalMsg}`);
+            
+            alert("QUAKEN IMPACT INITIALIZED! Target has been marked. ☠️");
+        }
+    </script>
+
+</body>
+          </html>
+      
