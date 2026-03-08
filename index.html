@@ -2,124 +2,206 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LURAX JOKI | MULTI-GAME SUPREME</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LURAX JOKI | REAL-TIME SLAYER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @keyframes glow { 0% { box-shadow: 0 0 5px #ff0000; } 50% { box-shadow: 0 0 25px #ff0000; } 100% { box-shadow: 0 0 5px #ff0000; } }
-        body { background: #050505; color: #fff; font-family: 'Arial Black', sans-serif; scroll-behavior: smooth; }
-        .lurax-card { background: rgba(15, 15, 15, 0.95); border: 1px solid #333; border-radius: 25px; transition: 0.3s; }
-        .active-tab { color: #ff0000; border-bottom: 4px solid #ff0000; transform: scale(1.1); }
-        .discount-badge { background: #ff0000; color: white; font-size: 10px; padding: 2px 8px; border-radius: 5px; animation: pulse 1s infinite; }
-        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        body { background: #000; color: #fff; font-family: 'Arial Black', sans-serif; margin: 0; overflow-x: hidden; touch-action: none; }
+        
+        /* CANVAS PEDANG */
+        #swordCanvas {
+            position: fixed; top: 0; left: 0; z-index: 100;
+            pointer-events: none; /* Biar gak ngeblok klik di tombol */
+        }
+
+        /* INTRO OVERLAY */
+        #intro-overlay {
+            position: fixed; inset: 0; background: #000; z-index: 999;
+            display: flex; flex-direction: column; justify-content: center; items-center;
+            transition: opacity 1s ease;
+        }
+
+        .lurax-bg { background: radial-gradient(circle at center, #1a0000 0%, #000 100%); min-height: 100vh; }
+        .glass-hd { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,0,0,0.3); border-radius: 40px; }
+        .price-text { font-size: 3.5rem; color: #ff0000; text-shadow: 0 0 25px #ff0000; font-weight: 900; }
+        
+        /* COUPLE PHOTO HD */
+        .couple-frame { border: 4px solid #fff; position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(255,0,0,0.5); border-radius: 20px; }
+        
+        .active-tab { color: #ff0000; border-bottom: 4px solid #ff0000; opacity: 1 !important; }
+
+        /* BUTTON PULSE */
+        .btn-glow { animation: pulseGlow 2s infinite; }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="lurax-bg">
+
+    <canvas id="swordCanvas"></canvas>
+
+    <div id="intro-overlay">
+        <h1 class="text-4xl md:text-6xl font-black italic mb-6 tracking-tighter text-center">LURAX <span class="text-red-600">JOKI</span></h1>
+        <p class="text-zinc-500 mb-10 text-xs tracking-widest uppercase">Tap Screen to Unleash Anti-Magic</p>
+        <button id="startBtn" class="btn-glow bg-red-600 text-white px-12 py-5 font-black rounded-full uppercase italic tracking-widest text-xl">
+            BUKA PEDANG ⚔️
+        </button>
+    </div>
 
     <audio id="astaTheme" loop><source src="https://www.mboxdrive.com/Black%20Catcher.mp3" type="audio/mpeg"></audio>
 
-    <nav class="flex justify-between items-center mb-10 pb-5 border-b border-white/10">
-        <h1 class="text-3xl font-black italic">LURAX <span class="text-red-600">JOKI</span></h1>
-        <button onclick="toggleMusic()" class="text-red-600 text-2xl"><i id="musicIcon" class="fas fa-play-circle"></i></button>
-    </nav>
-
-    <div class="max-w-xl mx-auto lurax-card p-8 shadow-2xl relative overflow-hidden">
-        <div class="absolute -top-10 -left-10 w-32 h-32 bg-red-600 blur-[80px] opacity-20"></div>
+    <div id="main-content" class="hidden opacity-0 transition-opacity duration-1000 pt-10">
         
-        <div class="flex justify-center gap-8 mb-10">
-            <button onclick="setGame('ML')" id="tabML" class="active-tab font-black italic text-lg transition">MOBILE LEGENDS</button>
-            <button onclick="setGame('BS')" id="tabBS" class="font-black italic text-lg transition opacity-50">BLOOD STRIKE</button>
-        </div>
+        <header class="text-center mb-16 px-6">
+            <h2 class="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none">THE <span class="text-red-600">STRONGEST</span></h2>
+            <p class="text-zinc-600 text-[10px] tracking-[1em] uppercase mt-2">Lurax Joki Division</p>
+        </header>
 
-        <div class="space-y-6">
-            <div>
-                <label id="labelRank" class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Target Rank</label>
-                <select id="rankSelect" onchange="calculate()" class="w-full bg-zinc-900 border-2 border-zinc-800 p-4 rounded-xl text-white font-bold outline-none focus:border-red-600"></select>
-            </div>
-
-            <div>
-                <label id="labelQty" class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Jumlah Bintang/Tier</label>
-                <input type="number" id="starInput" oninput="calculate()" placeholder="0" class="w-full bg-zinc-900 border-2 border-zinc-800 p-4 rounded-xl text-white font-bold text-2xl outline-none focus:border-red-600">
-            </div>
-
-            <div class="bg-black p-6 rounded-2xl border border-red-900/50 text-center">
-                <p class="text-[10px] text-zinc-500 font-bold uppercase mb-1">Total Biaya</p>
-                <div id="priceDisplay" class="text-4xl font-black italic text-white tracking-tighter">Rp 0</div>
-                <div id="discountInfo" class="mt-2 hidden">
-                    <span class="discount-badge" id="discountText">DISKON 0%</span>
-                    <p id="originalPrice" class="text-xs text-zinc-600 line-through mt-1"></p>
+        <section class="max-w-4xl mx-auto px-6 mb-20">
+            <div class="glass-hd p-8 flex flex-col md:flex-row items-center gap-10 border-r-8 border-red-600">
+                <div class="w-full md:w-64 h-64 couple-frame">
+                    <img src="https://i.pinimg.com/736x/2c/31/5b/2c315b3e230325d2c2f782c58970e44b.jpg" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 bg-red-600 text-white text-[10px] px-3 py-1 font-black">CALEB & AYANG</div>
+                </div>
+                <div class="text-center md:text-left flex-1">
+                    <h3 class="text-3xl font-black italic text-red-600 mb-2 uppercase">HD ROMANCE 🤭</h3>
+                    <p class="text-zinc-400 italic text-sm leading-relaxed">"Pedang ini gak cuma buat nebas Rank Immortal, tapi juga buat ngelindungin masa depan kita. Joki lancar, mahar lancar, Ayang senang! No Blur, No Ghosting!"</p>
                 </div>
             </div>
+        </section>
 
-            <button onclick="order()" class="w-full bg-red-600 hover:bg-white hover:text-red-600 py-5 rounded-2xl font-black text-xl transition-all shadow-lg shadow-red-900/30">
-                TEBAS SEKARANG! ⚔️
-            </button>
-        </div>
+        <section id="calc" class="pb-32 px-6">
+            <div class="max-w-xl mx-auto glass-hd p-8 md:p-12 shadow-2xl">
+                <div class="flex justify-between mb-10 border-b border-white/5 pb-4">
+                    <button onclick="setGame('ML')" id="tabML" class="active-tab font-black italic uppercase tracking-tighter">Mobile Legends</button>
+                    <button onclick="setGame('BS')" id="tabBS" class="font-black italic opacity-30 uppercase tracking-tighter">Blood Strike</button>
+                </div>
+
+                <div class="space-y-6">
+                    <select id="rankSelect" onchange="run()" class="w-full bg-zinc-900/50 p-5 rounded-2xl border border-zinc-700 outline-none focus:border-red-600 font-bold italic"></select>
+                    <input type="number" id="starInput" oninput="run()" placeholder="Jumlah Order" class="w-full bg-zinc-900/50 p-5 rounded-2xl border border-zinc-700 outline-none focus:border-red-600 font-black text-2xl">
+                    
+                    <div class="bg-black/50 p-8 rounded-3xl text-center border-2 border-red-600/20">
+                        <p class="text-[10px] text-zinc-500 font-black uppercase mb-2">Total Pembayaran</p>
+                        <div id="total" class="price-text italic">Rp 0</div>
+                        <div id="discInfo" class="hidden mt-4"><span class="bg-white text-black px-4 py-1 rounded text-[10px] font-black italic" id="discText"></span></div>
+                    </div>
+
+                    <button onclick="order()" class="w-full bg-red-600 text-white py-6 rounded-2xl font-black text-2xl hover:bg-white hover:text-black transition-all">ORDER VIA WA <i class="fab fa-whatsapp ml-2"></i></button>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <footer class="text-center mt-20 opacity-30">
-        <p class="text-[10px] tracking-[0.5em] font-bold uppercase">LURAX JOKI | OWNER: CAPTAIN CALEB</p>
-    </footer>
-
     <script>
-        let currentGame = 'ML';
-        const config = {
-            ML: { label: "Target Rank ML", qty: "Jumlah Bintang", options: [{n:"EPIC",p:5000},{n:"LEGEND",p:8000},{n:"MYTHIC",p:15000},{n:"IMMORTAL",p:25000}] },
-            BS: { label: "Target Rank BS", qty: "Jumlah Tier", options: [{n:"IRON-SILVER",p:15000},{n:"SILVER-GOLD",p:30000},{n:"GOLD-PLAT",p:50000},{n:"PLAT-DIAMOND",p:80000},{n:"MASTER-LEGEND",p:200000}] }
+        // --- REAL-TIME SWORD ENGINE (FOLLOW MOUSE/TOUCH) ---
+        const canvas = document.getElementById('swordCanvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        const maxPoints = 20;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function handleMove(e) {
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+            points.push({ x, y, age: 0 });
+        }
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('touchmove', handleMove);
+
+        function drawSword() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (points.length > 1) {
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                
+                for (let i = 1; i < points.length; i++) {
+                    ctx.lineTo(points[i].x, points[i].y);
+                }
+
+                // Efek Cahaya Pedang
+                ctx.strokeStyle = '#ff0000';
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#ff0000';
+                ctx.stroke();
+
+                // Inti Putih Pedang
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                for (let i = 1; i < points.length; i++) { ctx.lineTo(points[i].x, points[i].y); }
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 1.5;
+                ctx.shadowBlur = 0;
+                ctx.stroke();
+            }
+
+            for (let i = 0; i < points.length; i++) {
+                points[i].age++;
+            }
+            points = points.filter(p => p.age < maxPoints);
+            requestAnimationFrame(drawSword);
+        }
+        drawSword();
+
+        // --- INTRO & CORE LOGIC ---
+        document.getElementById('startBtn').addEventListener('click', function() {
+            document.getElementById('intro-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-overlay').style.display = 'none';
+                document.getElementById('main-content').classList.remove('hidden');
+                setTimeout(() => document.getElementById('main-content').classList.add('opacity-100'), 100);
+                document.getElementById('astaTheme').play();
+            }, 1000);
+        });
+
+        let game = 'ML';
+        const cfg = {
+            ML: { opts: [{n:"EPIC",p:5000},{n:"LEGEND",p:8000},{n:"MYTHIC",p:15000},{n:"IMMORTAL",p:25000}] },
+            BS: { opts: [{n:"BRONZE-GOLD",p:35000},{n:"PLAT-DIAMOND",p:75000},{n:"MASTER-LEGEND",p:150000}] }
         };
 
         function setGame(g) {
-            currentGame = g;
-            document.getElementById('tabML').className = g === 'ML' ? 'active-tab font-black italic text-lg' : 'font-black italic text-lg opacity-50';
-            document.getElementById('tabBS').className = g === 'BS' ? 'active-tab font-black italic text-lg' : 'font-black italic text-lg opacity-50';
-            document.getElementById('labelRank').innerText = config[g].label;
-            document.getElementById('labelQty').innerText = config[g].qty;
-            const sel = document.getElementById('rankSelect');
-            sel.innerHTML = '<option value="0">-- PILIH --</option>';
-            config[g].options.forEach(o => sel.innerHTML += `<option value="${o.p}">${o.n}</option>`);
-            calculate();
+            game = g;
+            document.getElementById('tabML').className = g === 'ML' ? 'active-tab font-black italic' : 'font-black italic opacity-30';
+            document.getElementById('tabBS').className = g === 'BS' ? 'active-tab font-black italic' : 'font-black italic opacity-30';
+            const s = document.getElementById('rankSelect');
+            s.innerHTML = '<option value="0">-- PILIH TARGET --</option>';
+            cfg[g].opts.forEach(o => s.innerHTML += `<option value="${o.p}">${o.n}</option>`);
+            run();
         }
 
-        function calculate() {
+        function run() {
             let base = document.getElementById('rankSelect').value * document.getElementById('starInput').value;
-            let disc = 0;
-            let final = base;
-
-            if (base >= 200000) { disc = 0.15; }
-            else if (base >= 100000) { disc = 0.10; }
-
-            final = base - (base * disc);
-
-            const disp = document.getElementById('priceDisplay');
-            const info = document.getElementById('discountInfo');
-            
-            disp.innerText = "Rp " + Math.floor(final).toLocaleString('id-ID');
-            
-            if (disc > 0) {
-                info.classList.remove('hidden');
-                document.getElementById('discountText').innerText = `DISKON IBLIS ${disc*100}%`;
-                document.getElementById('originalPrice').innerText = "Rp " + base.toLocaleString('id-ID');
-            } else {
-                info.classList.add('hidden');
-            }
+            let d = base >= 200000 ? 0.15 : (base >= 100000 ? 0.1 : 0);
+            let f = base - (base * d);
+            document.getElementById('total').innerText = "Rp " + Math.floor(f).toLocaleString('id-ID');
+            const i = document.getElementById('discInfo');
+            if(d > 0) { i.classList.remove('hidden'); document.getElementById('discText').innerText = `ANTI-MAGIC DISCOUNT ${d*100}%`; }
+            else { i.classList.add('hidden'); }
         }
 
         function order() {
             const r = document.getElementById('rankSelect').options[document.getElementById('rankSelect').selectedIndex].text;
             const q = document.getElementById('starInput').value;
-            const p = document.getElementById('priceDisplay').innerText;
-            if (q <= 0 || r.includes('--')) return alert("Isi Target Dulu!");
-            const msg = `🔥 ORDER LURAX JOKI 🔥\nGame: ${currentGame}\nRank: ${r}\nQty: ${q}\nTotal: ${p}\n\nGAS TEBAS!`;
-            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent(msg)}`, '_blank');
+            const p = document.getElementById('total').innerText;
+            if(q <= 0 || r.includes('--')) return alert("Isi Target Dulu, Captain!");
+            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent('🔥 LURAX JOKI ORDER 🔥\n----------------------\nGame: '+game+'\nRank: '+r+'\nJumlah: '+q+'\nTotal: '+p+'\n----------------------\nGAS TEBAS SEKARANG!')}`, '_blank');
         }
 
-        const audio = document.getElementById('astaTheme');
-        function toggleMusic() {
-            if (audio.paused) { audio.play(); document.getElementById('musicIcon').className = 'fas fa-pause-circle'; }
-            else { audio.pause(); document.getElementById('musicIcon').className = 'fas fa-play-circle'; }
-        }
-        document.body.addEventListener('click', () => { if(audio.paused) toggleMusic(); }, {once:true});
         setGame('ML');
     </script>
 </body>
