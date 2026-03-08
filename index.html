@@ -2,159 +2,125 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CALEB | VIP MOBILE COMMANDER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LURAX JOKI | MULTI-GAME SUPREME</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --p: #a855f7; --s: #ef4444; --bg: #030005; }
-        body { 
-            background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; 
-            overflow-x: hidden; -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Cinematic Grid & Glow */
-        .bg-abyss {
-            position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #030005 100%);
-        }
-        .bg-abyss::after {
-            content: ""; position: absolute; inset: 0;
-            background-image: linear-gradient(var(--p) 0.5px, transparent 0.5px), linear-gradient(90deg, var(--p) 0.5px, transparent 0.5px);
-            background-size: 30px 30px; opacity: 0.05;
-        }
-
-        /* VIP Glass Design */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            border-radius: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        /* Neon Animations */
-        .neon-text { text-shadow: 0 0 15px var(--p); }
-        .neon-border-pulse { animation: border-pulse 2s infinite; }
-        @keyframes border-pulse {
-            0% { border-color: rgba(168, 85, 247, 0.2); }
-            50% { border-color: rgba(239, 68, 68, 0.5); }
-            100% { border-color: rgba(168, 85, 247, 0.2); }
-        }
-
-        /* Mobile Optimization */
-        input, select, textarea {
-            background: rgba(0,0,0,0.4) !important;
-            border: 1px solid rgba(168, 85, 247, 0.3) !important;
-            color: var(--p) !important;
-            font-size: 16px !important; /* Fix auto-zoom iOS */
-        }
-        .btn-vip {
-            background: linear-gradient(45deg, #6b21a8, #991b1b);
-            transition: 0.3s; font-family: 'Orbitron';
-        }
-        .btn-vip:active { transform: scale(0.92); filter: brightness(1.2); }
+        @keyframes glow { 0% { box-shadow: 0 0 5px #ff0000; } 50% { box-shadow: 0 0 25px #ff0000; } 100% { box-shadow: 0 0 5px #ff0000; } }
+        body { background: #050505; color: #fff; font-family: 'Arial Black', sans-serif; scroll-behavior: smooth; }
+        .lurax-card { background: rgba(15, 15, 15, 0.95); border: 1px solid #333; border-radius: 25px; transition: 0.3s; }
+        .active-tab { color: #ff0000; border-bottom: 4px solid #ff0000; transform: scale(1.1); }
+        .discount-badge { background: #ff0000; color: white; font-size: 10px; padding: 2px 8px; border-radius: 5px; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
     </style>
 </head>
-<body>
-    <div class="bg-abyss"></div>
+<body class="p-4 md:p-10">
 
-    <audio id="dark-bgm" loop><source src="https://files.catbox.moe/k6n2zo.mp3" type="audio/mpeg"></audio>
-    <div onclick="toggleMusic()" id="music-fab" class="fixed bottom-6 right-6 z-50 p-4 glass-card neon-border-pulse cursor-pointer">
-        <span id="music-icon" class="text-xs font-black uppercase">🔊 Music</span>
-    </div>
+    <audio id="astaTheme" loop><source src="https://www.mboxdrive.com/Black%20Catcher.mp3" type="audio/mpeg"></audio>
 
-    <nav class="fixed top-0 w-full z-40 p-6 flex justify-between items-center bg-black/20 backdrop-blur-md">
-        <div class="text-2xl font-black neon-text italic uppercase tracking-tighter">CALEB<span class="text-red-600">.VIP</span></div>
-        <div class="text-[9px] font-bold text-zinc-500 border border-zinc-800 px-3 py-1 rounded-full uppercase tracking-widest">Mobile Encrypted</div>
+    <nav class="flex justify-between items-center mb-10 pb-5 border-b border-white/10">
+        <h1 class="text-3xl font-black italic">LURAX <span class="text-red-600">JOKI</span></h1>
+        <button onclick="toggleMusic()" class="text-red-600 text-2xl"><i id="musicIcon" class="fas fa-play-circle"></i></button>
     </nav>
 
-    <main class="min-h-screen pt-32 px-6 flex flex-col items-center">
-        <div class="text-center mb-12" data-aos="zoom-in">
-            <h2 class="text-purple-500 text-[10px] tracking-[1em] uppercase font-bold mb-2">Absolute Control</h2>
-            <h1 class="text-6xl font-black italic tracking-tighter leading-none mb-4">COMMAND<br><span class="text-transparent" style="-webkit-text-stroke: 1px #a855f7;">CENTER</span></h1>
-            <p class="text-zinc-500 text-xs italic tracking-widest">"Dunia dalam genggaman, kegelapan dalam pikiran."</p>
+    <div class="max-w-xl mx-auto lurax-card p-8 shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-red-600 blur-[80px] opacity-20"></div>
+        
+        <div class="flex justify-center gap-8 mb-10">
+            <button onclick="setGame('ML')" id="tabML" class="active-tab font-black italic text-lg transition">MOBILE LEGENDS</button>
+            <button onclick="setGame('BS')" id="tabBS" class="font-black italic text-lg transition opacity-50">BLOOD STRIKE</button>
         </div>
 
-        <div class="w-full max-w-md glass-card p-8 mb-24 neon-border-pulse" data-aos="fade-up">
-            <div class="space-y-6">
-                <div>
-                    <label class="text-[10px] uppercase font-black text-purple-400 mb-2 block tracking-widest">Target ID (No WA)</label>
-                    <input id="target" type="tel" placeholder="628XXXXXXXXX" class="w-full p-4 rounded-2xl outline-none focus:border-red-500 transition-all font-mono">
-                </div>
-
-                <div>
-                    <label class="text-[10px] uppercase font-black text-red-500 mb-2 block tracking-widest">Select Jutsu Bug</label>
-                    <select id="jutsu" onchange="autoFill()" class="w-full p-4 rounded-2xl outline-none font-bold text-xs uppercase">
-                        <option value="">-- PILIH BUG --</option>
-                        <option value="FC">Yami Freeze (Force Close)</option>
-                        <option value="LAG">Void Lag (Heavy Ram)</option>
-                        <option value="JAM">Dark Jammer (Centang 1)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[10px] uppercase font-black text-purple-400 mb-2 block tracking-widest">Payload Data</label>
-                    <textarea id="payload" class="w-full p-4 rounded-2xl h-24 text-xs italic outline-none" placeholder="Payload Bug..."></textarea>
-                </div>
-
-                <div class="flex items-center justify-between text-[8px] text-zinc-600 font-black uppercase bg-black/40 p-3 rounded-xl">
-                    <span>IP-Masking: ON</span>
-                    <span>Ghost-Mode: ACTIVE</span>
-                    <span>Self-Destruct: ON</span>
-                </div>
-
-                <button onclick="launchBreaker()" class="w-full py-5 btn-vip rounded-2xl text-white font-black text-xs uppercase tracking-[0.5em] shadow-[0_0_20px_rgba(168,85,247,0.3)]">
-                    EXECUTE_DARKNESS
-                </button>
+        <div class="space-y-6">
+            <div>
+                <label id="labelRank" class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Target Rank</label>
+                <select id="rankSelect" onchange="calculate()" class="w-full bg-zinc-900 border-2 border-zinc-800 p-4 rounded-xl text-white font-bold outline-none focus:border-red-600"></select>
             </div>
-        </div>
-    </main>
 
-    <footer class="py-10 text-center bg-black/50">
-        <p class="text-[8px] text-zinc-700 tracking-[0.8em] uppercase mb-2">Captain Caleb Blackbeard</p>
-        <p class="text-[10px] italic text-zinc-500 font-bold uppercase tracking-widest">"ZEHAHAHA! NO TRACE LEFT!"</p>
+            <div>
+                <label id="labelQty" class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Jumlah Bintang/Tier</label>
+                <input type="number" id="starInput" oninput="calculate()" placeholder="0" class="w-full bg-zinc-900 border-2 border-zinc-800 p-4 rounded-xl text-white font-bold text-2xl outline-none focus:border-red-600">
+            </div>
+
+            <div class="bg-black p-6 rounded-2xl border border-red-900/50 text-center">
+                <p class="text-[10px] text-zinc-500 font-bold uppercase mb-1">Total Biaya</p>
+                <div id="priceDisplay" class="text-4xl font-black italic text-white tracking-tighter">Rp 0</div>
+                <div id="discountInfo" class="mt-2 hidden">
+                    <span class="discount-badge" id="discountText">DISKON 0%</span>
+                    <p id="originalPrice" class="text-xs text-zinc-600 line-through mt-1"></p>
+                </div>
+            </div>
+
+            <button onclick="order()" class="w-full bg-red-600 hover:bg-white hover:text-red-600 py-5 rounded-2xl font-black text-xl transition-all shadow-lg shadow-red-900/30">
+                TEBAS SEKARANG! ⚔️
+            </button>
+        </div>
+    </div>
+
+    <footer class="text-center mt-20 opacity-30">
+        <p class="text-[10px] tracking-[0.5em] font-bold uppercase">LURAX JOKI | OWNER: CAPTAIN CALEB</p>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
-
-        const dataBug = {
-            "FC": "\u202E".repeat(800) + " [SYSTEM_CRASH_BY_CALEB] " + "\u202D".repeat(800),
-            "LAG": "░".repeat(25000) + " [SYSTEM_LAG_V9]",
-            "JAM": "0".repeat(65000)
+        let currentGame = 'ML';
+        const config = {
+            ML: { label: "Target Rank ML", qty: "Jumlah Bintang", options: [{n:"EPIC",p:5000},{n:"LEGEND",p:8000},{n:"MYTHIC",p:15000},{n:"IMMORTAL",p:25000}] },
+            BS: { label: "Target Rank BS", qty: "Jumlah Tier", options: [{n:"IRON-SILVER",p:15000},{n:"SILVER-GOLD",p:30000},{n:"GOLD-PLAT",p:50000},{n:"PLAT-DIAMOND",p:80000},{n:"MASTER-LEGEND",p:200000}] }
         };
 
+        function setGame(g) {
+            currentGame = g;
+            document.getElementById('tabML').className = g === 'ML' ? 'active-tab font-black italic text-lg' : 'font-black italic text-lg opacity-50';
+            document.getElementById('tabBS').className = g === 'BS' ? 'active-tab font-black italic text-lg' : 'font-black italic text-lg opacity-50';
+            document.getElementById('labelRank').innerText = config[g].label;
+            document.getElementById('labelQty').innerText = config[g].qty;
+            const sel = document.getElementById('rankSelect');
+            sel.innerHTML = '<option value="0">-- PILIH --</option>';
+            config[g].options.forEach(o => sel.innerHTML += `<option value="${o.p}">${o.n}</option>`);
+            calculate();
+        }
+
+        function calculate() {
+            let base = document.getElementById('rankSelect').value * document.getElementById('starInput').value;
+            let disc = 0;
+            let final = base;
+
+            if (base >= 200000) { disc = 0.15; }
+            else if (base >= 100000) { disc = 0.10; }
+
+            final = base - (base * disc);
+
+            const disp = document.getElementById('priceDisplay');
+            const info = document.getElementById('discountInfo');
+            
+            disp.innerText = "Rp " + Math.floor(final).toLocaleString('id-ID');
+            
+            if (disc > 0) {
+                info.classList.remove('hidden');
+                document.getElementById('discountText').innerText = `DISKON IBLIS ${disc*100}%`;
+                document.getElementById('originalPrice').innerText = "Rp " + base.toLocaleString('id-ID');
+            } else {
+                info.classList.add('hidden');
+            }
+        }
+
+        function order() {
+            const r = document.getElementById('rankSelect').options[document.getElementById('rankSelect').selectedIndex].text;
+            const q = document.getElementById('starInput').value;
+            const p = document.getElementById('priceDisplay').innerText;
+            if (q <= 0 || r.includes('--')) return alert("Isi Target Dulu!");
+            const msg = `🔥 ORDER LURAX JOKI 🔥\nGame: ${currentGame}\nRank: ${r}\nQty: ${q}\nTotal: ${p}\n\nGAS TEBAS!`;
+            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        const audio = document.getElementById('astaTheme');
         function toggleMusic() {
-            const a = document.getElementById('dark-bgm');
-            if(a.paused) { a.play(); document.getElementById('music-icon').innerText = "⏸ Playing"; }
-            else { a.pause(); document.getElementById('music-icon').innerText = "🔊 Music"; }
+            if (audio.paused) { audio.play(); document.getElementById('musicIcon').className = 'fas fa-pause-circle'; }
+            else { audio.pause(); document.getElementById('musicIcon').className = 'fas fa-play-circle'; }
         }
-
-        function autoFill() {
-            const choice = document.getElementById('jutsu').value;
-            document.getElementById('payload').value = dataBug[choice] || "";
-        }
-
-        async function launchBreaker() {
-            const target = document.getElementById('target').value;
-            const msg = document.getElementById('payload').value;
-            
-            if(!target || !msg) return alert("Peringatan: Isi Nomor & Jutsu!");
-
-            // Visual Loading VIP
-            document.querySelector('.btn-vip').innerText = "SCRRAMBLING_IP...";
-            
-            setTimeout(() => {
-                const finalUrl = `https://api.whatsapp.com/send?phone=${target}&text=${encodeURIComponent(msg)}`;
-                window.open(finalUrl, '_blank');
-                document.querySelector('.btn-vip').innerText = "EXECUTE_DARKNESS";
-                console.clear();
-            }, 1200);
-        }
+        document.body.addEventListener('click', () => { if(audio.paused) toggleMusic(); }, {once:true});
+        setGame('ML');
     </script>
 </body>
 </html>
