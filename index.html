@@ -3,154 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CALEB | THE VOID COMMANDER</title>
+    <title>CALEB | GHOST COMMANDER</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@300;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <style>
         :root { --primary: #8b5cf6; --accent: #ff0000; --bg: #010103; }
         body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; }
-        
-        /* Cyber Grid Background */
-        .grid-overlay {
-            position: fixed; inset: 0; pointer-events: none;
-            background-image: linear-gradient(to right, rgba(139, 92, 246, 0.05) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px; z-index: -1;
-        }
-
-        .glass-vip { background: rgba(8, 4, 15, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(139, 92, 246, 0.2); box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .neon-glow { text-shadow: 0 0 20px var(--primary); }
-        
-        .btn-execute {
-            background: linear-gradient(90deg, #4c1d95, #7f1d1d);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255,0,0,0.3);
-        }
-        .btn-execute:hover { letter-spacing: 3px; box-shadow: 0 0 50px var(--accent); transform: scale(1.02); }
-
-        input, textarea, select { background: rgba(0,0,0,0.6) !important; border: 1px solid #1e1b4b !important; color: #a855f7 !important; transition: 0.3s; }
-        input:focus, textarea:focus { border-color: var(--primary) !important; box-shadow: 0 0 10px var(--primary); }
-
-        /* Music Pulse */
-        .music-pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(139, 92, 246, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); } }
+        .glass-vip { background: rgba(8, 4, 15, 0.95); backdrop-filter: blur(25px); border: 1px solid rgba(139, 92, 246, 0.3); }
+        .neon-text { text-shadow: 0 0 15px var(--primary); }
+        .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px); background-size: 30px 30px; z-index: -1; }
+        .btn-ghost { background: linear-gradient(45deg, #1e1b4b, #7f1d1d); border: 1px solid var(--accent); transition: 0.5s; }
+        .btn-ghost:hover { box-shadow: 0 0 30px var(--accent); letter-spacing: 4px; }
     </style>
 </head>
-<body>
-    <div class="grid-overlay"></div>
+<body class="grid-bg">
 
-    <audio id="dark-bgm" loop>
-        <source src="https://files.catbox.moe/k6n2zo.mp3" type="audio/mpeg">
-    </audio>
-    <div id="music-trigger" onclick="playMusic()" class="fixed bottom-10 right-10 z-[100] cursor-pointer p-5 bg-purple-900 rounded-full music-pulse border border-purple-400">
-        <span class="text-[10px] font-black uppercase tracking-tighter">🔊 SYMPHONY</span>
-    </div>
+    <audio id="dark-bgm" loop><source src="https://files.catbox.moe/k6n2zo.mp3" type="audio/mpeg"></audio>
+    <div onclick="playMusic()" id="m-btn" class="fixed bottom-5 right-5 z-50 p-4 bg-purple-900 rounded-full cursor-pointer animate-bounce border border-purple-400 text-[10px] font-black uppercase">🔊 Open Symphony</div>
 
-    <nav class="fixed w-full z-50 glass-vip px-10 py-6 flex justify-between items-center border-b border-purple-900/30">
-        <div class="text-3xl font-black tracking-tighter neon-glow">CALEB<span class="text-red-600 italic">.VOID</span></div>
-        <div class="hidden md:flex space-x-12 text-[10px] font-black uppercase tracking-[0.3em]">
-            <a href="#home" class="hover:text-purple-400 transition">BASE_CORE</a>
-            <a href="#power" class="hover:text-purple-400 transition">YAMI_SKILLS</a>
-            <a href="#breaker" class="text-red-500 hover:neon-glow transition">BREAKER_SYSTEM</a>
-        </div>
+    <nav class="fixed w-full z-50 glass-vip p-6 flex justify-between items-center border-b border-purple-900/40">
+        <div class="text-3xl font-black neon-text italic">CALEB<span class="text-red-600">.GHOST</span></div>
+        <div class="text-[10px] font-bold tracking-[0.5em] text-zinc-500 uppercase">Status: Invisible Mode</div>
     </nav>
 
-    <section id="home" class="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
-        <div class="absolute w-[800px] h-[800px] bg-purple-900/5 rounded-full blur-[200px] animate-pulse"></div>
-        <h2 class="text-purple-500 text-xs tracking-[2em] mb-6 uppercase font-bold" data-aos="fade-down">Absolute System Authority</h2>
-        <h1 class="text-7xl md:text-[10rem] font-black mb-8 leading-none italic tracking-tighter" data-aos="zoom-in">
-            ABYSS<br><span class="text-transparent" style="-webkit-text-stroke: 2px #8b5cf6;">COMMANDER</span>
-        </h1>
-        <p class="max-w-2xl text-zinc-600 mb-12 text-xl font-light italic" data-aos="fade-up">"Dunia tidak membutuhkan pahlawan. Dunia hanya membutuhkan kegelapan yang cukup untuk menelan kebohongan."</p>
-        <a href="#breaker" class="btn-execute px-20 py-6 rounded-sm font-black uppercase tracking-[0.5em] text-xs" data-aos="fade-up" data-aos-delay="400">Execute Breach</a>
+    <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+        <h1 class="text-7xl md:text-[8rem] font-black italic tracking-tighter mb-4" data-aos="zoom-in">THE<br><span class="text-transparent" style="-webkit-text-stroke: 2px #8b5cf6;">GHOST</span></h1>
+        <p class="text-zinc-500 max-w-lg mb-10 italic" data-aos="fade-up">"Menghancurkan tanpa terlihat. Lokasimu adalah misteri, seranganmu adalah fakta. ZEHAHAHA!"</p>
+        <a href="#breaker" class="px-12 py-4 btn-ghost rounded-full font-black uppercase tracking-widest text-xs">Enter Command Center</a>
     </section>
 
-    <section id="power" class="py-40 px-10 max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div class="glass-vip p-12 rounded-[2rem] group" data-aos="fade-up">
-                <h3 class="text-2xl font-black mb-6 text-purple-400 italic">YAMI CORE</h3>
-                <p class="text-zinc-500 leading-relaxed font-medium">Membangun ekosistem digital yang tak terlihat. Backend sekuat Gura-Gura no Mi, Frontend sepekat Yami-Yami.</p>
-            </div>
-            <div class="glass-vip p-12 rounded-[2rem] border-red-900/50 group" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="text-2xl font-black mb-6 text-red-600 italic">QUAKEN BREAKER</h3>
-                <p class="text-zinc-500 leading-relaxed font-medium font-bold italic text-red-900/80">Force Close Engine, Memory Lag Generator, & Connection Jamming Logic. No Mercy.</p>
-            </div>
-            <div class="glass-vip p-12 rounded-[2rem] group" data-aos="fade-up" data-aos-delay="400">
-                <h3 class="text-2xl font-black mb-6 text-purple-400 italic">STEALTH API</h3>
-                <p class="text-zinc-500 leading-relaxed font-medium">Pengiriman paket data massal tanpa identitas. Menyerang target dari pusat singularitas.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="breaker" class="py-40 px-6">
-        <div class="max-w-5xl mx-auto glass-vip rounded-[3rem] overflow-hidden relative" data-aos="flip-left">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-600 to-transparent opacity-50"></div>
-            <div class="flex flex-col md:flex-row h-full">
-                <div class="md:w-1/3 bg-purple-950/20 p-12 border-r border-purple-900/20 flex flex-col justify-between">
+    <section id="breaker" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto glass-vip rounded-3xl p-10 relative overflow-hidden" data-aos="fade-up">
+            <h2 class="text-4xl font-black mb-8 italic border-b border-purple-900 pb-4 text-white">STEALTH_PANEL v5.0</h2>
+            
+            <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <h2 class="text-5xl font-black mb-8 italic text-white tracking-tighter">VOID<br>TRACKER</h2>
-                        <ul class="space-y-6 text-[10px] text-zinc-500 font-black uppercase tracking-[0.4em]">
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Status: Gacor</li>
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span> Mode: Ultimate</li>
-                            <li class="flex items-center gap-3"><span class="w-2 h-2 bg-indigo-500 rounded-full"></span> Target: Locked</li>
-                        </ul>
+                        <label class="text-[10px] uppercase font-bold text-purple-500 mb-2 block">Target ID</label>
+                        <input id="target" type="text" placeholder="62XXXXXXXXXXX" class="w-full bg-black/60 border border-zinc-800 p-4 rounded-xl text-purple-400 outline-none focus:border-purple-500">
                     </div>
-                </div>
-
-                <div class="md:w-2/3 p-12 space-y-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label class="text-[10px] font-black text-purple-500 uppercase tracking-widest mb-4 block">Target WA Number</label>
-                            <input id="target" type="text" placeholder="62812XXXXXXXX" class="w-full p-5 rounded-2xl outline-none text-lg tracking-[0.2em] font-mono">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-black text-purple-500 uppercase tracking-widest mb-4 block">Burst Intensity (Spam)</label>
-                            <input id="spam_count" type="number" value="1" min="1" max="10" class="w-full p-5 rounded-2xl outline-none text-lg">
-                        </div>
-                    </div>
-
                     <div>
-                        <label class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-4 block">Pilih Jutsu Penghancur</label>
-                        <select id="mode" class="w-full p-5 rounded-2xl outline-none font-bold uppercase tracking-widest text-xs">
-                            <option value="NORMAL">Shadow Report (Default)</option>
-                            <option value="LAG">Void Lag (Memory Eater)</option>
+                        <label class="text-[10px] uppercase font-bold text-red-500 mb-2 block">Jutsu Selection</label>
+                        <select id="template" onchange="loadBug()" class="w-full bg-black/60 border border-zinc-800 p-4 rounded-xl text-red-500 outline-none focus:border-red-500 uppercase font-bold text-xs">
+                            <option value="">-- PILIH JUTSU --</option>
                             <option value="FC">Yami Freeze (Force Close)</option>
-                            <option value="JAMMER">Darkness Jammer (Centang 1)</option>
+                            <option value="LAG">Void Lag (RAM Eater)</option>
+                            <option value="JAM">Dark Jammer (Centang 1)</option>
                         </select>
                     </div>
-
-                    <div>
-                        <label class="text-[10px] font-black text-purple-500 uppercase tracking-widest mb-4 block">Payload Message</label>
-                        <textarea id="msg" placeholder="Write your bug report or trigger code..." class="w-full p-5 rounded-2xl h-40 outline-none italic"></textarea>
-                    </div>
-
-                    <button onclick="executeBreaker()" class="w-full py-6 btn-execute text-white font-black tracking-[0.8em] rounded-2xl text-lg uppercase shadow-2xl">
-                        /BREACH_NOW
-                    </button>
                 </div>
+
+                <div>
+                    <label class="text-[10px] uppercase font-bold text-purple-500 mb-2 block">Payload Generator</label>
+                    <textarea id="msg" class="w-full bg-black/60 border border-zinc-800 p-4 rounded-xl h-32 italic text-sm text-zinc-400 outline-none focus:border-purple-500"></textarea>
+                </div>
+
+                <div class="flex items-center gap-4 text-[10px] text-zinc-600 font-bold uppercase mb-4">
+                    <input type="checkbox" checked disabled> <span>IP Masking Active</span>
+                    <input type="checkbox" checked disabled> <span>Self-Destruct Logs On</span>
+                </div>
+
+                <button onclick="executeGacor()" class="w-full py-6 btn-ghost rounded-2xl font-black text-lg uppercase tracking-[0.6em]">
+                    EXECUTE_STEALTH
+                </button>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center border-t border-purple-900/10">
-        <p class="text-zinc-600 text-[10px] font-black tracking-[1em] mb-4 uppercase">CAPTAIN CALEB | DARKNESS KERNEL</p>
-        <p class="text-[8px] text-zinc-800 italic uppercase">"People's dreams... never end! ZEHAHAHA!"</p>
+    <footer class="py-10 text-center text-zinc-800 text-[10px] uppercase tracking-widest italic">
+        "Kegelapan adalah pelindung terbaik. Captain Caleb © 2026"
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // INIT ANIMATION
-        AOS.init({ duration: 1500, once: true });
+        AOS.init();
+        const bugs = {
+            "FC": "\u202E".repeat(700) + " [FORCE_CLOSE_ACTIVE] " + "\u202D".repeat(700),
+            "LAG": "░".repeat(20000) + " [VOID_LAG]",
+            "JAM": "0".repeat(65000)
+        };
 
-        // DARK SYMPHONY LOGIC
-        function playMusic() {
-            const audio = document.getElementById('dark-bgm');
-            audio.volume = 0.5;
-            audio.play().catch(e => console.log("User interaction required for audio."));
-            document.getElementById('music-trigger').style.display = 'none';
+        function playMusic() { document.getElementById('dark-bgm').play(); document.getElementById('m-btn').style.display = 'none'; }
+        function loadBug() { document.getElementById('msg').value = bugs[document.getElementById('template').value] || ""; }
+
+        async function executeGacor() {
+            const target = document.getElementById('target').value;
+            const msg = document.getElementById('msg').value;
+            if(!target || !msg) return alert("[!] Masukkan Target!");
+
+            alert("[🛡️] MASKING IP... ENCRYPTING PACKETS... ZEHAHAHA!");
+
+            // STEALTH MODE: Gunakan Redirect sebagai demo, atau sambungkan ke Backend Proxy lu
+            const shadowUrl = `https://api.whatsapp.com/send?phone=${target}&text=${encodeURIComponent(msg)}`;
+            
+            // Self Destruct Simulation
+            setTimeout(() => {
+                console.clear();
+                alert("[🔥] GHOST MODE SUCCESS: Logs have been swallowed by the Void!");
+                window.open(shadowUrl, '_blank');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+style.display = 'none';
         }
 
         // PAYLOAD GENERATOR (BREAKER LOGIC)
