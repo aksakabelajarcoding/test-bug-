@@ -1,75 +1,36 @@
 #include <iostream>
 #include <vector>
-#include <memory>
-#include <algorithm>
-#include <chrono>
 #include <thread>
+#include <future>
+#include <iomanip>
 
 /**
- * @author: Captain Caleb (LURAX JOKI OWNER)
- * @mode: Anti-Magic Overload 100%
+ * LURAX VIP SYSTEM V3.0 - MULTI-CORE EDITION
+ * Designed for Captain Caleb
  */
 
-namespace LuraxCore {
-
-    // Template Class buat nanganin Rank apapun (ML/BS/DLL)
-    template <typename T>
-    class RankSlayer {
-    private:
-        T currentPower;
-        std::string swordType = "Demon-Slasher";
-
+namespace LuraxVIP {
+    class AntiMagicEngine {
     public:
-        RankSlayer(T power) : currentPower(power) {}
-
-        // Advanced Lambda Function buat kalkulasi "Violence Damage" ke Rank musuh
-        auto unleashAntiMagic = [this](int multiplier) {
-            std::cout << "[SYSTEM] Slicing through dimensions with " << swordType << "..." << std::endl;
-            return (currentPower * multiplier) ^ 0x666; // Bitwise XOR for chaos encryption
-        };
-
-        void executeOrder() {
-            auto start = std::chrono::high_resolution_clock::now();
-            
-            std::cout << "\n[!] LURAX ENGINE INITIALIZED..." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-            
-            std::cout << "[+] Processing Tier Destruction: " << unleashAntiMagic(77) << " DPS" << std::endl;
-            
-            auto end = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double> diff = end - start;
-            std::cout << "[+] Victory achieved in: " << diff.count() << "s (Ultra HD Speed)" << std::endl;
+        // Pake Async biar kliatan canggih nembus limit
+        static std::string processOrder(std::string rank) {
+            std::cout << "[SYSTEM] Analyzing Rank: " << rank << "..." << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            return "SUCCESS_DESTRUCTION_OF_" + rank;
         }
     };
-
-    // Smart Pointer Management buat Data Ayang (Biar gak bocor/Memory Leak)
-    struct RomanceData {
-        std::string name;
-        int loveLevel = 999999;
-    };
-
-    void protectAyang() {
-        auto ayang = std::make_unique<RomanceData>();
-        ayang->name = "Ayang Captain Caleb";
-        std::cout << "\n[ROMANCE_SHIELD] Protecting " << ayang->name << " with Anti-Magic Barrier..." << std::endl;
-        std::cout << "[STATUS] Love Level: " << ayang->loveLevel << " (IMMORTAL)" << std::endl;
-    }
 }
 
 int main() {
-    // Styling Output (Gak kaku, penuh simbol gahar)
-    std::cout << "========================================" << std::endl;
-    std::cout << "   LURAX JOKI - SUPREME COMMAND LINE    " << std::endl;
-    std::cout << "========================================" << std::endl;
+    std::cout << "\033[1;31m" << "LURAX VIP COMMAND CENTER INITIALIZING..." << "\033[0m" << std::endl;
 
-    // Pakai Logic Template & Smart Pointer
-    LuraxCore::RankSlayer<long long> masterSlayer(99998888);
-    masterSlayer.executeOrder();
+    // Simulasi Multi-Threading
+    auto future1 = std::async(std::launch::async, LuraxVIP::AntiMagicEngine::processOrder, "IMMORTAL_100_STARS");
+    auto future2 = std::async(std::launch::async, LuraxVIP::AntiMagicEngine::processOrder, "LEGENDARY_STRIKE");
 
-    LuraxCore::protectAyang();
+    std::cout << "[+] Parallel Thread #1: " << future1.get() << std::endl;
+    std::cout << "[+] Parallel Thread #2: " << future2.get() << std::endl;
 
-    std::cout << "\n[!] ALL LIMITS SURPASSED. ASTA OUT." << std::endl;
-    std::cout << "========================================" << std::endl;
-
+    std::cout << "\n[!] VIP STATUS: ALL TIERS RECTIFIED." << std::endl;
     return 0;
 }
