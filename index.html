@@ -3,185 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LURAX VIP | SUPREME COMMANDER</title>
+    <title>LURAX VIP | FIXED CENTER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Exo+2:wght@300;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
         
-        :root { --vip-red: #ff0000; --deep-black: #050505; }
-        body { background: var(--deep-black); color: #fff; font-family: 'Exo 2', sans-serif; margin: 0; overflow: hidden; }
+        body { background: #000; color: #fff; margin: 0; overflow: hidden; height: 100vh; width: 100vw; }
 
-        /* --- 1. INTRO FIX (CENTERED & RESPONSIVE) --- */
+        /* INTRO LAYER: PAKSA JADI FULL SCREEN & CENTER */
         #intro-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center Vertikal */
+            align-items: center;     /* Center Horizontal */
         }
+
+        /* CONTAINER PEDANG: BIAR GAK LARI KEMANA-MANA */
+        .sword-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 350px; /* Area kerja pedang */
+            width: 100px;
+        }
+
         .scabbard-vip {
-            width: 14px; height: 220px; background: linear-gradient(to right, #111, #333, #111);
-            border: 1px solid #444; border-radius: 0 0 10px 10px; position: relative;
+            width: 14px;
+            height: 220px;
+            background: linear-gradient(to right, #111, #333, #111);
+            border: 1px solid #444;
+            border-radius: 0 0 10px 10px;
+            position: relative;
+            z-index: 1;
         }
+
         #hilt {
-            width: 45px; height: 75px; background: #000; border: 2px solid var(--vip-red);
-            box-shadow: 0 0 15px var(--vip-red); border-radius: 5px;
-            position: absolute; top: -75px; left: 50%; transform: translateX(-50%);
-            cursor: grab; display: flex; justify-content: center; align-items: center; z-index: 100;
+            width: 50px;
+            height: 80px;
+            background: #000;
+            border: 2px solid #ff0000;
+            box-shadow: 0 0 20px #ff0000;
+            border-radius: 6px;
+            position: absolute;
+            top: -80px; /* Posisi awal nangkring di atas sarung */
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
+
         #blade-pre {
-            position: absolute; top: 0; left: 50%; width: 5px; transform: translateX(-50%);
-            background: #fff; box-shadow: 0 0 15px var(--vip-red);
+            position: absolute;
+            top: 0;
+            width: 6px;
+            background: #fff;
+            box-shadow: 0 0 15px #ff0000;
+            z-index: 5;
         }
 
-        /* --- 2. SWORD TRAIL --- */
-        #swordCanvas { position: fixed; top: 0; left: 0; z-index: 9000; pointer-events: none; }
-
-        /* --- 3. MODERN CONTENT (CLEAN LAYOUT) --- */
-        #main-content { display: none; opacity: 0; transition: 1s; padding-bottom: 50px; }
+        .font-vip { font-family: 'Syncopate', sans-serif; letter-spacing: 10px; text-shadow: 0 0 10px #f00; }
+        #main-content { display: none; opacity: 0; }
         .active-web { display: block !important; opacity: 1 !important; overflow-y: auto; height: 100vh; }
-
-        .vip-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-top: 3px solid var(--vip-red);
-            border-radius: 20px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .vip-card:hover { transform: translateY(-8px); background: rgba(255, 0, 0, 0.05); }
-
-        .font-vip { font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
-        .neon-text { text-shadow: 0 0 10px var(--vip-red); }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: var(--vip-red); }
     </style>
 </head>
 <body>
 
-    <canvas id="swordCanvas"></canvas>
-
     <div id="intro-overlay">
-        <h1 class="font-vip text-2xl md:text-4xl mb-16 neon-text">LURAX<span class="text-red-600">VIP</span></h1>
-        <div class="scabbard-vip">
-            <div id="blade-pre" style="height: 0;"></div>
-            <div id="hilt"><i class="fas fa-skull text-red-600"></i></div>
+        <h1 class="font-vip text-2xl md:text-4xl mb-24 italic uppercase">LURAX<span class="text-red-600">VIP</span></h1>
+        
+        <div class="sword-container">
+            <div id="hilt">
+                <i class="fas fa-skull text-red-600"></i>
+            </div>
+            <div class="scabbard-vip">
+                <div id="blade-pre" style="height: 0;"></div>
+            </div>
         </div>
-        <p class="mt-12 text-[8px] tracking-[6px] text-zinc-500 font-bold uppercase">Pull to Unleash Anti-Magic</p>
+        
+        <p class="mt-16 text-[9px] tracking-[5px] text-zinc-500 uppercase font-bold">Slide Up to Draw ⚔️</p>
     </div>
 
-    <audio id="astaTheme" loop><source src="https://www.mboxdrive.com/Black%20Catcher.mp3" type="audio/mpeg"></audio>
-
-    <div id="main-content" class="pt-12 px-6">
-        <div class="max-w-6xl mx-auto">
-            
-            <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8 text-center md:text-left">
-                <div>
-                    <h2 class="font-vip text-4xl md:text-6xl neon-text italic">COMMANDER<br><span class="text-red-600">CALEB</span></h2>
-                    <p class="text-zinc-600 tracking-[0.8em] text-[9px] mt-4 uppercase font-bold">Lurax Elite Joki System</p>
-                </div>
-                <div class="vip-card p-4 flex items-center gap-4 rounded-2xl">
-                    <img src="https://i.pinimg.com/736x/2c/31/5b/2c315b3e230325d2c2f782c58970e44b.jpg" class="w-16 h-16 rounded-xl object-cover border border-zinc-800">
-                    <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-red-600">Caleb & Ayang</h4>
-                        <p class="text-[9px] text-zinc-500 italic">"Love and Strength Combined"</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-                <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="vip-card p-5 group">
-                        <div class="overflow-hidden rounded-xl mb-4 h-40 bg-zinc-900">
-                            <img src="https://via.placeholder.com/500x300/111/ff0000?text=MLBB+OBLIVION" class="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
-                        </div>
-                        <h3 class="font-vip text-sm mb-2 text-red-600">MLBB Immortal</h3>
-                        <p class="text-[11px] text-zinc-500 italic leading-relaxed">Push Rank secepat kilat tanpa ampun. Anti-Magic logic menjamin winstreak abadi.</p>
-                    </div>
-                    <div class="vip-card p-5 group">
-                        <div class="overflow-hidden rounded-xl mb-4 h-40 bg-zinc-900">
-                            <img src="https://via.placeholder.com/500x300/111/ff0000?text=BSTRIKE+LEGEND" class="w-full h-full object-cover opacity-50 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
-                        </div>
-                        <h3 class="font-vip text-sm mb-2 text-red-600">BStrike Elite</h3>
-                        <p class="text-[11px] text-zinc-500 italic leading-relaxed">Eksekusi Master ke Legend dengan efisiensi 100%. Tak terlihat, tak terkalahkan.</p>
-                    </div>
-                </div>
-
-                <div class="vip-card p-8 border-r-4 border-red-600">
-                    <div class="flex gap-4 mb-8 border-b border-white/5 pb-2">
-                        <button onclick="setGame('ML')" id="tabML" class="font-vip text-[10px] text-red-600">MLBB</button>
-                        <button onclick="setGame('BS')" id="tabBS" class="font-vip text-[10px] opacity-30">B-STRIKE</button>
-                    </div>
-                    <div class="space-y-6">
-                        <select id="rankSelect" onchange="run()" class="w-full bg-black border border-zinc-800 p-4 rounded-xl outline-none focus:border-red-600 text-xs font-bold"></select>
-                        <input type="number" id="starInput" oninput="run()" placeholder="QUANTITY" class="w-full bg-black border border-zinc-800 p-4 rounded-xl outline-none focus:border-red-600 font-black text-xl">
-                        <div class="bg-black/80 p-6 rounded-2xl text-center border border-red-950">
-                            <p class="text-[8px] text-zinc-600 font-bold tracking-[3px] mb-2">TOTAL MAHAR</p>
-                            <div id="total" class="font-vip text-2xl neon-text mb-2">Rp 0</div>
-                            <div id="discInfo" class="hidden"><span class="bg-red-600 text-white px-3 py-1 rounded-full text-[8px] font-black" id="discText"></span></div>
-                        </div>
-                        <button onclick="order()" class="w-full py-5 rounded-xl border-2 border-red-600 text-white font-vip text-[10px] hover:bg-red-600 transition-all">Execute Command</button>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="text-center opacity-30">
-                <p class="text-[8px] tracking-[10px] uppercase font-bold">Lurax Joki &copy; 2026</p>
-            </footer>
-        </div>
+    <div id="main-content" class="p-10 text-center">
+        <h2 class="text-4xl font-black text-red-600">ACCESS GRANTED</h2>
+        <p>Welcome to the VIP Command Center, Caleb!</p>
     </div>
 
     <script>
-        // --- INTRO DRAG ENGINE (FIXED) ---
         const hilt = document.getElementById('hilt');
         const bladePre = document.getElementById('blade-pre');
         const intro = document.getElementById('intro-overlay');
         const main = document.getElementById('main-content');
-        let isDragging = false, startY, currentY = -75;
+        
+        let isDragging = false;
+        let startY, currentY = -80;
 
-        function startDrag(e) { 
-            isDragging = true; 
-            startY = e.touches ? e.touches[0].clientY : e.clientY; 
+        function startDrag(e) {
+            isDragging = true;
+            startY = e.touches ? e.touches[0].clientY : e.clientY;
             hilt.style.transition = 'none';
         }
+
         function doDrag(e) {
             if (!isDragging) return;
             const y = e.touches ? e.touches[0].clientY : e.clientY;
-            let newY = currentY + (y - startY);
-            if (newY < -75) newY = -75;
+            const deltaY = y - startY;
+            let newY = currentY + deltaY;
+
+            // Batasin biar gak copot
+            if (newY < -80) newY = -80; 
+            
             hilt.style.top = `${newY}px`;
-            bladePre.style.height = `${Math.max(0, newY + 75)}px`;
-            if (newY >= 140) unleash();
+            bladePre.style.height = `${Math.max(0, newY + 80)}px`;
+
+            // Kalau ditarik cukup tinggi (lepas sarung)
+            if (newY >= 140) {
+                unleash();
+            }
         }
-        function stopDrag() { 
-            if(!isDragging) return; 
-            isDragging = false; 
-            hilt.style.transition = '0.3s'; 
-            hilt.style.top = '-75px'; 
-            bladePre.style.height = '0'; 
+
+        function stopDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            // Mental balik kalo gak ditarik sampe full
+            hilt.style.transition = '0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            hilt.style.top = '-80px';
+            bladePre.style.height = '0';
         }
 
         hilt.addEventListener('mousedown', startDrag);
         window.addEventListener('mousemove', doDrag);
         window.addEventListener('mouseup', stopDrag);
+
         hilt.addEventListener('touchstart', startDrag);
         window.addEventListener('touchmove', doDrag);
         window.addEventListener('touchend', stopDrag);
 
         function unleash() {
             isDragging = false;
-            document.getElementById('astaTheme').play();
-            intro.style.transition = '1s'; intro.style.opacity = '0';
+            intro.style.transition = '1s';
+            intro.style.opacity = '0';
             setTimeout(() => {
                 intro.style.display = 'none';
                 main.classList.add('active-web');
                 document.body.style.overflow = 'auto';
             }, 1000);
         }
-
-        // --- SWORD TRAIL ---
-        const canvas = document.getElementById('swordCanvas');
-        const ctx = canvas.getContext('2d');
+    </script>
+</body>
+</html>
+  const ctx = canvas.getContext('2d');
         let points = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
