@@ -1,36 +1,59 @@
 #include <iostream>
+#include <string>
 #include <vector>
-#include <thread>
-#include <future>
-#include <iomanip>
+#include <windows.h> // Untuk Sleep & Color
 
-/**
- * LURAX VIP SYSTEM V3.0 - MULTI-CORE EDITION
- * Designed for Captain Caleb
- */
+using namespace std;
 
-namespace LuraxVIP {
-    class AntiMagicEngine {
-    public:
-        // Pake Async biar kliatan canggih nembus limit
-        static std::string processOrder(std::string rank) {
-            std::cout << "[SYSTEM] Analyzing Rank: " << rank << "..." << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            return "SUCCESS_DESTRUCTION_OF_" + rank;
+// --- DATABASE LOGIC ---
+struct Mission {
+    string uuid;
+    string objective;
+    string status;
+};
+
+class LuraxCommander {
+public:
+    void BootSystem() {
+        system("cls");
+        system("color 0C"); // Set terminal warna merah hitam
+        cout << "===========================================" << endl;
+        cout << "   LURAX VIP | SUPREME KERNEL v6.0         " << endl;
+        cout << "===========================================" << endl;
+        cout << " [!] STATUS: CONNECTING TO ID-WEST-01..." << endl;
+        Sleep(1000);
+        cout << " [!] BYPASSING MAGIC PROTECTION... [OK]" << endl;
+        cout << " [!] SYNCING WITH WEB DASHBOARD... [OK]" << endl;
+        cout << "-------------------------------------------" << endl;
+    }
+
+    void Execute(string task, int qty) {
+        cout << "\n [>] STARTING MISSION: " << task << endl;
+        cout << " [>] TARGET QUANTITY: " << qty << " STARS/TIER" << endl;
+        
+        for(int i = 0; i <= 100; i += 25) {
+            cout << " [PROC] Processing Core Data... " << i << "%" << endl;
+            Sleep(500);
         }
-    };
-}
+        cout << " [!] SUCCESS: MISSION INJECTED TO SERVER." << endl;
+    }
+
+    void ShowSQL() {
+        cout << "\n >> LIVE_TRANSACTIONS.SQL FETCHED:" << endl;
+        cout << " 1. 0x8F2D-VIP | MLBB IMMORTAL | EXECUTING" << endl;
+        cout << " 2. 0x3E11-VIP | BS LEGEND     | SUCCESS" << endl;
+        cout << " 3. 0xV92K-VIP | MYTHIC x20    | SUCCESS" << endl;
+    }
+};
 
 int main() {
-    std::cout << "\033[1;31m" << "LURAX VIP COMMAND CENTER INITIALIZING..." << "\033[0m" << std::endl;
+    LuraxCommander caleb;
+    caleb.BootSystem();
+    caleb.Execute("MLBB IMMORTAL", 100);
+    caleb.ShowSQL();
 
-    // Simulasi Multi-Threading
-    auto future1 = std::async(std::launch::async, LuraxVIP::AntiMagicEngine::processOrder, "IMMORTAL_100_STARS");
-    auto future2 = std::async(std::launch::async, LuraxVIP::AntiMagicEngine::processOrder, "LEGENDARY_STRIKE");
-
-    std::cout << "[+] Parallel Thread #1: " << future1.get() << std::endl;
-    std::cout << "[+] Parallel Thread #2: " << future2.get() << std::endl;
-
-    std::cout << "\n[!] VIP STATUS: ALL TIERS RECTIFIED." << std::endl;
+    cout << "\n-------------------------------------------" << endl;
+    cout << " SYSTEM SECURED. PRESS ENTER TO STANDBY." << endl;
+    cin.get();
     return 0;
 }
