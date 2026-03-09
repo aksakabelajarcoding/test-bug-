@@ -3,66 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LURAX VIP | SUPREME UNIFIED</title>
+    <title>LURAX VIP | SUPREME SONIC</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Exo+2:wght@300;600;900&display=swap');
-        
-        :root { --vip-red: #ff0000; --deep-black: #050505; }
-        body { background: var(--deep-black); color: #fff; font-family: 'Exo 2', sans-serif; margin: 0; overflow: hidden; touch-action: none; }
-
-        /* --- 1. GACOR SCANLINE --- */
-        body::before {
-            content: " "; display: block; position: fixed; inset: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 9998; background-size: 100% 2px, 3px 100%; pointer-events: none;
-        }
-
-        /* --- 2. INTRO OVERLAY --- */
-        #intro-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            cursor: crosshair; transition: 1s ease-out;
-        }
-
-        /* --- 3. SWORD TRAIL CANVASES --- */
-        #introCanvas, #mainCanvas { position: fixed; inset: 0; pointer-events: none; }
-        #introCanvas { z-index: 10000; }
-        #mainCanvas { z-index: 9000; }
-
-        /* --- 4. MAIN DASHBOARD --- */
-        #main-content { display: none; opacity: 0; height: 100vh; overflow-y: auto; padding-bottom: 80px; }
-        .active-web { display: block !important; opacity: 1 !important; }
-
-        .vip-card {
-            background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 0, 0, 0.15); border-top: 2px solid var(--vip-red);
-            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .font-vip { font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
-        .neon-text { text-shadow: 0 0 15px var(--vip-red); }
-
-        /* PULSE BUTTON */
-        .btn-order {
-            background: transparent; border: 2px solid var(--vip-red);
-            animation: pulse-red 2s infinite; transition: 0.3s;
-        }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
-        }
-        .btn-order:hover { background: var(--vip-red); color: #000; font-weight: 900; }
-
-        /* SQL TABLE */
-        .sql-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-        .sql-table td { background: rgba(255,255,255,0.02); padding: 15px; font-size: 11px; border-top: 1px solid rgba(255,255,255,0.05); }
-
-        #particles-js { position: fixed; inset: 0; z-index: -1; }
-        .cursor-blink { border-right: 3px solid var(--vip-red); animation: blink 0.7s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-    </style>
 </head>
 <body>
 
@@ -71,41 +15,56 @@
     <canvas id="mainCanvas"></canvas>
 
     <div id="intro-overlay">
-        <h1 class="font-vip text-2xl md:text-4xl mb-10 neon-text italic">LURAX<span class="text-red-600">VIP</span></h1>
-        <div class="h-40 flex items-center justify-center">
-             <i class="fas fa-bolt text-red-600 text-4xl animate-bounce"></i>
+        <h1 class="font-vip text-3xl md:text-5xl neon-text italic mb-8">LURAX<span class="text-red-600">VIP</span></h1>
+        <div class="relative group">
+            <div class="absolute -inset-4 bg-red-600 opacity-20 blur-xl group-hover:opacity-40 transition animate-pulse"></div>
+            <i class="fas fa-skull-crossbones text-white text-6xl relative z-10"></i>
         </div>
-        <p class="mt-10 text-[9px] tracking-[6px] text-zinc-500 font-bold uppercase animate-pulse">Slash Down to Unleash ⚔️</p>
+        <p class="mt-12 text-[10px] tracking-[8px] text-zinc-600 font-bold uppercase animate-pulse">Slash Screen to Authenticate ⚔️</p>
     </div>
 
-    <div id="main-content" class="pt-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            
-            <div class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
-                <div>
-                    <h2 class="font-vip text-4xl md:text-6xl neon-text italic min-h-[1.2em]">
-                        <span id="typing-title"></span><span class="cursor-blink">&nbsp;</span>
-                    </h2>
-                    <p class="text-zinc-600 tracking-[0.8em] text-[9px] mt-4 uppercase font-bold">Anti-Magic Command Center</p>
-                </div>
-                <div class="vip-card p-4 flex items-center gap-4">
-                    <img src="https://i.pinimg.com/736x/2c/31/5b/2c315b3e230325d2c2f782c58970e44b.jpg" class="w-16 h-16 rounded-xl object-cover grayscale border border-red-900">
-                    <div>
-                        <h4 class="text-xs font-black uppercase text-red-600 italic">Caleb & Ayang</h4>
-                        <p class="text-[9px] text-zinc-500 font-bold">STATUS: LOCKED 🔒</p>
-                    </div>
-                </div>
+    <div id="fake-notif" class="fake-notif">
+        <div class="flex items-center gap-3">
+            <div class="bg-red-600 p-2 rounded-lg animate-pulse">
+                <i class="fas fa-shopping-cart text-white text-xs"></i>
             </div>
+            <div>
+                <p id="notif-user" class="text-[10px] font-black text-white"></p>
+                <p id="notif-msg" class="text-[8px] text-zinc-400 uppercase tracking-widest"></p>
+            </div>
+        </div>
+    </div>
+
+    <audio id="astaTheme" loop><source src="https://www.mboxdrive.com/Black%20Catcher.mp3" type="audio/mpeg"></audio>
+    <audio id="notifSound"><source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg"></audio>
+
+    <div id="main-content" class="pt-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <header class="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
+                <div>
+                    <span class="text-red-600 font-black text-[10px] tracking-[5px] uppercase">Authorized Access</span>
+                    <h2 class="font-vip text-5xl md:text-7xl neon-text italic mt-2" id="typing-title"></h2>
+                </div>
+                <div class="text-right hidden md:block">
+                    <p class="text-zinc-600 text-[9px] font-bold uppercase tracking-widest">Server: ID-WEST-01</p>
+                    <p class="text-zinc-400 text-[10px] font-black italic" id="live-clock"></p>
+                </div>
+            </header>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <div class="lg:col-span-2 space-y-6">
-                    <h3 class="font-vip text-[10px] text-zinc-500 tracking-widest italic">>> MISSION_LOGS.SQL</h3>
-                    <div class="vip-card p-6 overflow-x-auto">
+                    <div class="warning-strip">
+                        <div class="warning-text">
+                            ⚠️ ALERT: HIGH TRAFFIC // SLOTS: <span class="slot-counter">03</span> // PRIORITY EXECUTION // ⚠️
+                        </div>
+                    </div>
+
+                    <div class="vip-card p-2 sql-container overflow-x-auto border-l-4 border-red-600">
                         <table class="sql-table">
-                            <thead><tr class="text-[10px] text-zinc-700 text-left"><th>UUID</th><th>OBJECTIVE</th><th>STATUS</th></tr></thead>
-                            <tbody>
-                                <tr><td>#8F2D</td><td class="font-black">MLBB IMMORTAL</td><td><span class="text-green-500">RECTIFIED</span></td></tr>
-                                <tr><td>#3E11</td><td class="font-black">BS MASTER</td><td><span class="text-yellow-500 italic">IN_SYNC</span></td></tr>
+                            <thead><tr><th>#REF_ID</th><th>MISSION</th><th>TIMESTAMP</th><th>STATUS</th></tr></thead>
+                            <tbody id="sql-body">
+                                <tr><td>0x8F2D</td><td class="font-black italic text-white">MLBB IMMORTAL ⭐100</td><td>09:15</td><td><span class="status-badge status-active">EXECUTING</span></td></tr>
+                                <tr><td>0x3E11</td><td class="font-black italic text-white">BS LEGEND TIER</td><td>08:45</td><td><span class="status-badge status-complete">SUCCESS</span></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -117,233 +76,20 @@
                         <button onclick="setGame('BS')" id="tabBS" class="font-vip text-[10px] opacity-30">BSTRIKE</button>
                     </div>
                     <div class="space-y-5">
-                        <select id="rankSelect" onchange="run()" class="w-full bg-black/50 border border-zinc-800 p-4 rounded-xl text-xs font-bold text-white outline-none focus:border-red-600"></select>
-                        <input type="number" id="starInput" oninput="run()" placeholder="QTY (⭐/TIER)" class="w-full bg-black/50 border border-zinc-800 p-4 rounded-xl font-black text-xl text-white outline-none focus:border-red-600">
-                        <div class="bg-black p-6 rounded-2xl text-center border border-red-950">
-                            <p class="text-[8px] text-zinc-600 font-bold tracking-[4px] mb-2 uppercase">Amount Sync</p>
-                            <div id="total" class="font-vip text-2xl neon-text mb-2">Rp 0</div>
-                            <div id="discInfo" class="hidden"><span class="bg-red-600 text-[8px] px-2 py-1 rounded font-black">DISC 15% APPLIED</span></div>
+                        <select id="rankSelect" onchange="run()" class="w-full bg-black border border-zinc-800 p-4 rounded-xl text-xs font-bold text-white"></select>
+                        <input type="number" id="starInput" oninput="run()" placeholder="QTY" class="w-full bg-black border border-zinc-800 p-4 rounded-xl font-black text-2xl text-white">
+                        <div class="bg-black p-8 rounded-3xl text-center border border-red-950">
+                            <p class="text-[9px] text-zinc-500 font-black uppercase mb-2">Sync Price</p>
+                            <div id="total" class="font-vip text-3xl neon-text">Rp 0</div>
                         </div>
-                        <button onclick="order()" class="w-full py-5 rounded-xl text-white font-vip text-[10px] btn-order uppercase">Execute Command</button>
+                        <button onclick="order()" class="w-full py-5 rounded-2xl btn-order font-vip text-[11px] italic font-black">EXECUTE MISSION</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <audio id="astaTheme" loop><source src="https://www.mboxdrive.com/Black%20Catcher.mp3" type="audio/mpeg"></audio>
-
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // --- 1. PARTICLES ---
-        particlesJS("particles-js", {
-            "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "opacity": { "value": 0.3 }, "size": { "value": 2 }, "move": { "enable": true, "speed": 1, "direction": "top", "random": true } }
-        });
-
-        // --- 2. INTERACTIVE SWORD TRAIL ---
-        const iCanvas = document.getElementById('introCanvas'), mCanvas = document.getElementById('mainCanvas');
-        const iCtx = iCanvas.getContext('2d'), mCtx = mCanvas.getContext('2d');
-        let iPoints = [], mPoints = [], isDrawing = false, dist = 0;
-
-        function resize() { iCanvas.width = mCanvas.width = window.innerWidth; iCanvas.height = mCanvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-
-        function drawBlade(ctx, pts) {
-            if (pts.length < 2) return;
-            ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-            pts.forEach(p => ctx.lineTo(p.x, p.y));
-            ctx.strokeStyle = '#ff0000'; ctx.lineWidth = 4; ctx.shadowBlur = 15; ctx.shadowColor = '#f00'; ctx.stroke();
-            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke();
-        }
-
-        const intro = document.getElementById('intro-overlay');
-        intro.addEventListener('mousedown', e => { isDrawing = true; iPoints = []; dist = 0; });
-        intro.addEventListener('touchstart', e => { isDrawing = true; iPoints = []; dist = 0; });
-
-        window.addEventListener('mousemove', e => {
-            if (isDrawing) {
-                iPoints.push({x: e.clientX, y: e.clientY, a: 0});
-                if(iPoints.length > 1) dist += Math.abs(e.clientY - iPoints[iPoints.length-2].y);
-                if(dist > 250) unleash();
-            } else {
-                mPoints.push({x: e.clientX, y: e.clientY, a: 0});
-            }
-        });
-
-        window.addEventListener('touchmove', e => {
-            let t = e.touches[0];
-            if (isDrawing) {
-                iPoints.push({x: t.clientX, y: t.clientY, a: 0});
-                if(iPoints.length > 1) dist += Math.abs(t.clientY - iPoints[iPoints.length-2].y);
-                if(dist > 200) unleash();
-            } else {
-                mPoints.push({x: t.clientX, y: t.clientY, a: 0});
-            }
-        });
-
-        window.addEventListener('mouseup', () => isDrawing = false);
-        window.addEventListener('touchend', () => isDrawing = false);
-
-        function unleash() {
-            if(intro.style.display === 'none') return;
-            isDrawing = false;
-            document.getElementById('astaTheme').play().catch(()=>{});
-            intro.style.opacity = '0';
-            setTimeout(() => {
-                intro.style.display = 'none';
-                document.getElementById('main-content').classList.add('active-web');
-                typeWriter();
-            }, 800);
-        }
-
-        function anim() {
-            iCtx.clearRect(0,0,iCanvas.width,iCanvas.height);
-            mCtx.clearRect(0,0,mCanvas.width,mCanvas.height);
-            drawBlade(iCtx, iPoints); drawBlade(mCtx, mPoints);
-            iPoints.forEach(p => p.a++); iPoints = iPoints.filter(p => p.a < 15);
-            mPoints.forEach(p => p.a++); mPoints = mPoints.filter(p => p.a < 10);
-            requestAnimationFrame(anim);
-        }
-        anim();
-
-        // --- 3. TYPING & CALC ---
-        const title = "COMMANDER CALEB", target = document.getElementById('typing-title');
-        let idx = 0;
-        function typeWriter() { if(idx < title.length){ target.innerHTML += title.charAt(idx); idx++; setTimeout(typeWriter, 120); } }
-
-        let game = 'ML';
-        const cfg = {
-            ML: { opts: [{n:"EPIC",p:5000},{n:"LEGEND",p:8000},{n:"MYTHIC",p:15000},{n:"IMMORTAL",p:25000}] },
-            BS: { opts: [{n:"SILVER-GOLD",p:35000},{n:"MASTER-LEGEND",p:250000}] }
-        };
-
-        function setGame(g) {
-            game = g;
-            document.getElementById('tabML').style.opacity = g === 'ML' ? '1' : '0.3';
-            document.getElementById('tabBS').style.opacity = g === 'BS' ? '1' : '0.3';
-            const s = document.getElementById('rankSelect');
-            s.innerHTML = '<option value="0">-- SYNC TARGET --</option>';
-            cfg[g].opts.forEach(o => s.innerHTML += `<option value="${o.p}">${o.n}</option>`);
-            run();
-        }
-
-        function run() {
-            let base = document.getElementById('rankSelect').value * document.getElementById('starInput').value;
-            let d = base >= 200000 ? 0.15 : 0;
-            let f = base - (base * d);
-            document.getElementById('total').innerText = "Rp " + Math.floor(f).toLocaleString('id-ID');
-            document.getElementById('discInfo').classList.toggle('hidden', d === 0);
-        }
-
-        function order() {
-            const r = document.getElementById('rankSelect').options[document.getElementById('rankSelect').selectedIndex].text;
-            const q = document.getElementById('starInput').value, p = document.getElementById('total').innerText;
-            if(q <= 0 || r.includes('--')) return alert("Gagal Sync!");
-            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent('🔱 LURAX VIP ORDER 🔱\nMission: '+game+' - '+r+'\nUnits: '+q+'\nTotal: '+p)}`);
-        }
-        setGame('ML');
-    </script>
-</body>
-</html>
-`;
-            if (newY >= 180) unleashWeb();
-        }
-        function stopDrag() { 
-            isDragging = false; 
-            hilt.style.transition = '0.3s'; 
-            hilt.style.top = `-70px`; 
-            bladePre.style.height = `0px`; 
-        }
-
-        hilt.addEventListener('mousedown', startDrag);
-        window.addEventListener('mousemove', doDrag);
-        window.addEventListener('mouseup', stopDrag);
-        hilt.addEventListener('touchstart', startDrag);
-        window.addEventListener('touchmove', doDrag);
-        window.addEventListener('touchend', stopDrag);
-
-        function unleashWeb() {
-            if(intro.style.display === 'none') return;
-            document.getElementById('astaTheme').play();
-            intro.style.display = 'none';
-            const main = document.getElementById('main-content');
-            main.classList.add('active-web');
-            setTimeout(() => { main.style.opacity = '1'; }, 100);
-        }
-
-        // --- SWORD CANVAS ---
-        const canvas = document.getElementById('swordCanvas');
-        const ctx = canvas.getContext('2d');
-        let points = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        window.addEventListener('mousemove', e => points.push({x:e.clientX, y:e.clientY, age:0}));
-        window.addEventListener('touchmove', e => points.push({x:e.touches[0].clientX, y:e.touches[0].clientY, age:0}));
-
-        function draw() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            if(points.length > 1) {
-                ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y);
-                for(let i=1; i<points.length; i++) ctx.lineTo(points[i].x, points[i].y);
-                ctx.strokeStyle = '#ff0000'; ctx.lineWidth = 4; ctx.shadowBlur = 10; ctx.shadowColor = '#ff0000'; ctx.stroke();
-                ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.shadowBlur = 0; ctx.stroke();
-            }
-            points.forEach(p => p.age++);
-            points = points.filter(p => p.age < 15);
-            requestAnimationFrame(draw);
-        }
-        draw();
-
-        // --- JOKI CORE ---
-        let game = 'ML';
-        const cfg = {
-            ML: { opts: [{n:"EPIC",p:5000},{n:"LEGEND",p:8000},{n:"MYTHIC",p:15000},{n:"IMMORTAL",p:25000}] },
-            BS: { opts: [{n:"SILVER-GOLD",p:35000},{n:"PLAT-DIAMOND",p:75000},{n:"MASTER-LEGEND",p:250000}] }
-        };
-
-        function setGame(g) {
-            game = g;
-            document.getElementById('tabML').className = g === 'ML' ? 'font-orbitron text-sm font-bold opacity-100 text-red-600 border-b-2 border-red-600 pb-2' : 'font-orbitron text-sm font-bold opacity-30 pb-2';
-            document.getElementById('tabBS').className = g === 'BS' ? 'font-orbitron text-sm font-bold opacity-100 text-red-600 border-b-2 border-red-600 pb-2' : 'font-orbitron text-sm font-bold opacity-30 pb-2';
-            const s = document.getElementById('rankSelect');
-            s.innerHTML = '<option value="0">-- SYNC RANK --</option>';
-            cfg[g].opts.forEach(o => s.innerHTML += `<option value="${o.p}">${o.n}</option>`);
-            run();
-        }
-
-        function run() {
-            let base = document.getElementById('rankSelect').value * document.getElementById('starInput').value;
-            let d = base >= 200000 ? 0.15 : (base >= 100000 ? 0.1 : 0);
-            let f = base - (base * d);
-            document.getElementById('total').innerText = "Rp " + Math.floor(f).toLocaleString('id-ID');
-            const i = document.getElementById('discInfo');
-            if(d > 0) { i.classList.remove('hidden'); document.getElementById('discText').innerText = `SYSTEM DISCOUNT ${d*100}%`; }
-            else { i.classList.add('hidden'); }
-        }
-
-        function order() {
-            const r = document.getElementById('rankSelect').options[document.getElementById('rankSelect').selectedIndex].text;
-            const q = document.getElementById('starInput').value;
-            const p = document.getElementById('total').innerText;
-            if(q <= 0 || r.includes('--')) return alert("SYNC FAILED: Data Missing!");
-            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent('🔥 LURAX MISSION INITIATED 🔥\nTarget: '+game+' - '+r+'\nUnits: '+q+'\nTotal: '+p+'\n\nEXECUTE!')}`, '_blank');
-        }
-        setGame('ML');
-    </script>
-</body>
-</html>
-se { i.classList.add('hidden'); }
-        }
-
-        function order() {
-            const r = document.getElementById('rankSelect').options[document.getElementById('rankSelect').selectedIndex].text;
-            const q = document.getElementById('starInput').value;
-            const p = document.getElementById('total').innerText;
-            if(q <= 0 || r.includes('--')) return alert("Isi Target Dulu, Captain!");
-            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent('🔥 LURAX JOKI ORDER 🔥\n----------------------\nGame: '+game+'\nRank: '+r+'\nJumlah: '+q+'\nTotal: '+p+'\n----------------------\nGAS TEBAS SEKARANG!')}`, '_blank');
-        }
-
-        setGame('ML');
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
