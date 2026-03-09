@@ -3,241 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LURAX VIP | FIXED CENTER</title>
+    <title>LURAX VIP | SUPREME UNIFIED</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Exo+2:wght@300;600;900&display=swap');
         
-        body { background: #000; color: #fff; margin: 0; overflow: hidden; height: 100vh; width: 100vw; }
+        :root { --vip-red: #ff0000; --deep-black: #050505; }
+        body { background: var(--deep-black); color: #fff; font-family: 'Exo 2', sans-serif; margin: 0; overflow: hidden; touch-action: none; }
 
-        /* INTRO LAYER: PAKSA JADI FULL SCREEN & CENTER */
+        /* --- 1. GACOR SCANLINE --- */
+        body::before {
+            content: " "; display: block; position: fixed; inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 9998; background-size: 100% 2px, 3px 100%; pointer-events: none;
+        }
+
+        /* --- 2. INTRO OVERLAY --- */
         #intro-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #000;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center Vertikal */
-            align-items: center;     /* Center Horizontal */
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: crosshair; transition: 1s ease-out;
         }
 
-        /* CONTAINER PEDANG: BIAR GAK LARI KEMANA-MANA */
-        .sword-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 350px; /* Area kerja pedang */
-            width: 100px;
-        }
+        /* --- 3. SWORD TRAIL CANVASES --- */
+        #introCanvas, #mainCanvas { position: fixed; inset: 0; pointer-events: none; }
+        #introCanvas { z-index: 10000; }
+        #mainCanvas { z-index: 9000; }
 
-        .scabbard-vip {
-            width: 14px;
-            height: 220px;
-            background: linear-gradient(to right, #111, #333, #111);
-            border: 1px solid #444;
-            border-radius: 0 0 10px 10px;
-            position: relative;
-            z-index: 1;
-        }
+        /* --- 4. MAIN DASHBOARD --- */
+        #main-content { display: none; opacity: 0; height: 100vh; overflow-y: auto; padding-bottom: 80px; }
+        .active-web { display: block !important; opacity: 1 !important; }
 
-        #hilt {
-            width: 50px;
-            height: 80px;
-            background: #000;
-            border: 2px solid #ff0000;
-            box-shadow: 0 0 20px #ff0000;
-            border-radius: 6px;
-            position: absolute;
-            top: -80px; /* Posisi awal nangkring di atas sarung */
-            cursor: grab;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
+        .vip-card {
+            background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 0, 0, 0.15); border-top: 2px solid var(--vip-red);
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+        .font-vip { font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
+        .neon-text { text-shadow: 0 0 15px var(--vip-red); }
 
-        #blade-pre {
-            position: absolute;
-            top: 0;
-            width: 6px;
-            background: #fff;
-            box-shadow: 0 0 15px #ff0000;
-            z-index: 5;
+        /* PULSE BUTTON */
+        .btn-order {
+            background: transparent; border: 2px solid var(--vip-red);
+            animation: pulse-red 2s infinite; transition: 0.3s;
         }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        .btn-order:hover { background: var(--vip-red); color: #000; font-weight: 900; }
 
-        .font-vip { font-family: 'Syncopate', sans-serif; letter-spacing: 10px; text-shadow: 0 0 10px #f00; }
-        #main-content { display: none; opacity: 0; }
-        .active-web { display: block !important; opacity: 1 !important; overflow-y: auto; height: 100vh; }
+        /* SQL TABLE */
+        .sql-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+        .sql-table td { background: rgba(255,255,255,0.02); padding: 15px; font-size: 11px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        #particles-js { position: fixed; inset: 0; z-index: -1; }
+        .cursor-blink { border-right: 3px solid var(--vip-red); animation: blink 0.7s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body>
 
+    <div id="particles-js"></div>
+    <canvas id="introCanvas"></canvas>
+    <canvas id="mainCanvas"></canvas>
+
     <div id="intro-overlay">
-        <h1 class="font-vip text-2xl md:text-4xl mb-24 italic uppercase">LURAX<span class="text-red-600">VIP</span></h1>
-        
-        <div class="sword-container">
-            <div id="hilt">
-                <i class="fas fa-skull text-red-600"></i>
+        <h1 class="font-vip text-2xl md:text-4xl mb-10 neon-text italic">LURAX<span class="text-red-600">VIP</span></h1>
+        <div class="h-40 flex items-center justify-center">
+             <i class="fas fa-bolt text-red-600 text-4xl animate-bounce"></i>
+        </div>
+        <p class="mt-10 text-[9px] tracking-[6px] text-zinc-500 font-bold uppercase animate-pulse">Slash Down to Unleash ⚔️</p>
+    </div>
+
+    <div id="main-content" class="pt-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
+                <div>
+                    <h2 class="font-vip text-4xl md:text-6xl neon-text italic min-h-[1.2em]">
+                        <span id="typing-title"></span><span class="cursor-blink">&nbsp;</span>
+                    </h2>
+                    <p class="text-zinc-600 tracking-[0.8em] text-[9px] mt-4 uppercase font-bold">Anti-Magic Command Center</p>
+                </div>
+                <div class="vip-card p-4 flex items-center gap-4">
+                    <img src="https://i.pinimg.com/736x/2c/31/5b/2c315b3e230325d2c2f782c58970e44b.jpg" class="w-16 h-16 rounded-xl object-cover grayscale border border-red-900">
+                    <div>
+                        <h4 class="text-xs font-black uppercase text-red-600 italic">Caleb & Ayang</h4>
+                        <p class="text-[9px] text-zinc-500 font-bold">STATUS: LOCKED 🔒</p>
+                    </div>
+                </div>
             </div>
-            <div class="scabbard-vip">
-                <div id="blade-pre" style="height: 0;"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-2 space-y-6">
+                    <h3 class="font-vip text-[10px] text-zinc-500 tracking-widest italic">>> MISSION_LOGS.SQL</h3>
+                    <div class="vip-card p-6 overflow-x-auto">
+                        <table class="sql-table">
+                            <thead><tr class="text-[10px] text-zinc-700 text-left"><th>UUID</th><th>OBJECTIVE</th><th>STATUS</th></tr></thead>
+                            <tbody>
+                                <tr><td>#8F2D</td><td class="font-black">MLBB IMMORTAL</td><td><span class="text-green-500">RECTIFIED</span></td></tr>
+                                <tr><td>#3E11</td><td class="font-black">BS MASTER</td><td><span class="text-yellow-500 italic">IN_SYNC</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="vip-card p-8 border-r-4 border-red-600 h-fit">
+                    <div class="flex gap-4 mb-8 border-b border-white/5 pb-2">
+                        <button onclick="setGame('ML')" id="tabML" class="font-vip text-[10px] text-red-600">MLBB</button>
+                        <button onclick="setGame('BS')" id="tabBS" class="font-vip text-[10px] opacity-30">BSTRIKE</button>
+                    </div>
+                    <div class="space-y-5">
+                        <select id="rankSelect" onchange="run()" class="w-full bg-black/50 border border-zinc-800 p-4 rounded-xl text-xs font-bold text-white outline-none focus:border-red-600"></select>
+                        <input type="number" id="starInput" oninput="run()" placeholder="QTY (⭐/TIER)" class="w-full bg-black/50 border border-zinc-800 p-4 rounded-xl font-black text-xl text-white outline-none focus:border-red-600">
+                        <div class="bg-black p-6 rounded-2xl text-center border border-red-950">
+                            <p class="text-[8px] text-zinc-600 font-bold tracking-[4px] mb-2 uppercase">Amount Sync</p>
+                            <div id="total" class="font-vip text-2xl neon-text mb-2">Rp 0</div>
+                            <div id="discInfo" class="hidden"><span class="bg-red-600 text-[8px] px-2 py-1 rounded font-black">DISC 15% APPLIED</span></div>
+                        </div>
+                        <button onclick="order()" class="w-full py-5 rounded-xl text-white font-vip text-[10px] btn-order uppercase">Execute Command</button>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <p class="mt-16 text-[9px] tracking-[5px] text-zinc-500 uppercase font-bold">Slide Up to Draw ⚔️</p>
     </div>
 
-    <div id="main-content" class="p-10 text-center">
-        <h2 class="text-4xl font-black text-red-600">ACCESS GRANTED</h2>
-        <p>Welcome to the VIP Command Center, Caleb!</p>
-    </div>
+    <audio id="astaTheme" loop><source src="https://www.mboxdrive.com/Black%20Catcher.mp3" type="audio/mpeg"></audio>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const hilt = document.getElementById('hilt');
-        const bladePre = document.getElementById('blade-pre');
+        // --- 1. PARTICLES ---
+        particlesJS("particles-js", {
+            "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "opacity": { "value": 0.3 }, "size": { "value": 2 }, "move": { "enable": true, "speed": 1, "direction": "top", "random": true } }
+        });
+
+        // --- 2. INTERACTIVE SWORD TRAIL ---
+        const iCanvas = document.getElementById('introCanvas'), mCanvas = document.getElementById('mainCanvas');
+        const iCtx = iCanvas.getContext('2d'), mCtx = mCanvas.getContext('2d');
+        let iPoints = [], mPoints = [], isDrawing = false, dist = 0;
+
+        function resize() { iCanvas.width = mCanvas.width = window.innerWidth; iCanvas.height = mCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        function drawBlade(ctx, pts) {
+            if (pts.length < 2) return;
+            ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+            pts.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.strokeStyle = '#ff0000'; ctx.lineWidth = 4; ctx.shadowBlur = 15; ctx.shadowColor = '#f00'; ctx.stroke();
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke();
+        }
+
         const intro = document.getElementById('intro-overlay');
-        const main = document.getElementById('main-content');
-        
-        let isDragging = false;
-        let startY, currentY = -80;
+        intro.addEventListener('mousedown', e => { isDrawing = true; iPoints = []; dist = 0; });
+        intro.addEventListener('touchstart', e => { isDrawing = true; iPoints = []; dist = 0; });
 
-        function startDrag(e) {
-            isDragging = true;
-            startY = e.touches ? e.touches[0].clientY : e.clientY;
-            hilt.style.transition = 'none';
-        }
-
-        function doDrag(e) {
-            if (!isDragging) return;
-            const y = e.touches ? e.touches[0].clientY : e.clientY;
-            const deltaY = y - startY;
-            let newY = currentY + deltaY;
-
-            // Batasin biar gak copot
-            if (newY < -80) newY = -80; 
-            
-            hilt.style.top = `${newY}px`;
-            bladePre.style.height = `${Math.max(0, newY + 80)}px`;
-
-            // Kalau ditarik cukup tinggi (lepas sarung)
-            if (newY >= 140) {
-                unleash();
+        window.addEventListener('mousemove', e => {
+            if (isDrawing) {
+                iPoints.push({x: e.clientX, y: e.clientY, a: 0});
+                if(iPoints.length > 1) dist += Math.abs(e.clientY - iPoints[iPoints.length-2].y);
+                if(dist > 250) unleash();
+            } else {
+                mPoints.push({x: e.clientX, y: e.clientY, a: 0});
             }
-        }
+        });
 
-        function stopDrag() {
-            if (!isDragging) return;
-            isDragging = false;
-            // Mental balik kalo gak ditarik sampe full
-            hilt.style.transition = '0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            hilt.style.top = '-80px';
-            bladePre.style.height = '0';
-        }
+        window.addEventListener('touchmove', e => {
+            let t = e.touches[0];
+            if (isDrawing) {
+                iPoints.push({x: t.clientX, y: t.clientY, a: 0});
+                if(iPoints.length > 1) dist += Math.abs(t.clientY - iPoints[iPoints.length-2].y);
+                if(dist > 200) unleash();
+            } else {
+                mPoints.push({x: t.clientX, y: t.clientY, a: 0});
+            }
+        });
 
-        hilt.addEventListener('mousedown', startDrag);
-        window.addEventListener('mousemove', doDrag);
-        window.addEventListener('mouseup', stopDrag);
-
-        hilt.addEventListener('touchstart', startDrag);
-        window.addEventListener('touchmove', doDrag);
-        window.addEventListener('touchend', stopDrag);
+        window.addEventListener('mouseup', () => isDrawing = false);
+        window.addEventListener('touchend', () => isDrawing = false);
 
         function unleash() {
-            isDragging = false;
-            intro.style.transition = '1s';
+            if(intro.style.display === 'none') return;
+            isDrawing = false;
+            document.getElementById('astaTheme').play().catch(()=>{});
             intro.style.opacity = '0';
             setTimeout(() => {
                 intro.style.display = 'none';
-                main.classList.add('active-web');
-                document.body.style.overflow = 'auto';
-            }, 1000);
+                document.getElementById('main-content').classList.add('active-web');
+                typeWriter();
+            }, 800);
         }
-    </script>
-</body>
-</html>
-     let game = 'ML';
+
+        function anim() {
+            iCtx.clearRect(0,0,iCanvas.width,iCanvas.height);
+            mCtx.clearRect(0,0,mCanvas.width,mCanvas.height);
+            drawBlade(iCtx, iPoints); drawBlade(mCtx, mPoints);
+            iPoints.forEach(p => p.a++); iPoints = iPoints.filter(p => p.a < 15);
+            mPoints.forEach(p => p.a++); mPoints = mPoints.filter(p => p.a < 10);
+            requestAnimationFrame(anim);
+        }
+        anim();
+
+        // --- 3. TYPING & CALC ---
+        const title = "COMMANDER CALEB", target = document.getElementById('typing-title');
+        let idx = 0;
+        function typeWriter() { if(idx < title.length){ target.innerHTML += title.charAt(idx); idx++; setTimeout(typeWriter, 120); } }
+
+        let game = 'ML';
         const cfg = {
             ML: { opts: [{n:"EPIC",p:5000},{n:"LEGEND",p:8000},{n:"MYTHIC",p:15000},{n:"IMMORTAL",p:25000}] },
-            BS: { opts: [{n:"SILVER-GOLD",p:35000},{n:"PLAT-DIAMOND",p:75000},{n:"MASTER-LEGEND",p:250000}] }
+            BS: { opts: [{n:"SILVER-GOLD",p:35000},{n:"MASTER-LEGEND",p:250000}] }
         };
 
         function setGame(g) {
             game = g;
-            document.getElementById('tabML').className = g === 'ML' ? 'font-vip text-xs text-red-600 border-b-2 border-red-600 pb-2' : 'font-vip text-xs opacity-30 pb-2';
-            document.getElementById('tabBS').className = g === 'BS' ? 'font-vip text-xs text-red-600 border-b-2 border-red-600 pb-2' : 'font-vip text-xs opacity-30 pb-2';
+            document.getElementById('tabML').style.opacity = g === 'ML' ? '1' : '0.3';
+            document.getElementById('tabBS').style.opacity = g === 'BS' ? '1' : '0.3';
             const s = document.getElementById('rankSelect');
-            s.innerHTML = '<option value="0">-- SELECT TARGET --</option>';
+            s.innerHTML = '<option value="0">-- SYNC TARGET --</option>';
             cfg[g].opts.forEach(o => s.innerHTML += `<option value="${o.p}">${o.n}</option>`);
             run();
         }
 
         function run() {
             let base = document.getElementById('rankSelect').value * document.getElementById('starInput').value;
-            let d = base >= 200000 ? 0.15 : (base >= 100000 ? 0.1 : 0);
+            let d = base >= 200000 ? 0.15 : 0;
             let f = base - (base * d);
             document.getElementById('total').innerText = "Rp " + Math.floor(f).toLocaleString('id-ID');
-            const i = document.getElementById('discInfo');
-            if(d > 0) { i.classList.remove('hidden'); document.getElementById('discText').innerText = `VIP DISCOUNT ${d*100}%`; }
-            else { i.classList.add('hidden'); }
+            document.getElementById('discInfo').classList.toggle('hidden', d === 0);
         }
 
         function order() {
             const r = document.getElementById('rankSelect').options[document.getElementById('rankSelect').selectedIndex].text;
-            const q = document.getElementById('starInput').value;
-            const p = document.getElementById('total').innerText;
-            if(q <= 0 || r.includes('--')) return alert("SYNC FAILED: ACCESS DENIED");
-            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent('🔱 LURAX VIP ORDER 🔱\n━━━━━━━━━━━━━━\nTarget: '+game+' | '+r+'\nUnits: '+q+'\nTotal: '+p+'\n━━━━━━━━━━━━━━\nEXECUTE COMMAND!')}`, '_blank');
+            const q = document.getElementById('starInput').value, p = document.getElementById('total').innerText;
+            if(q <= 0 || r.includes('--')) return alert("Gagal Sync!");
+            window.open(`https://wa.me/6288902072245?text=${encodeURIComponent('🔱 LURAX VIP ORDER 🔱\nMission: '+game+' - '+r+'\nUnits: '+q+'\nTotal: '+p)}`);
         }
         setGame('ML');
     </script>
 </body>
 </html>
-pe="number" id="starInput" oninput="run()" placeholder="0" class="w-full bg-black/40 border border-zinc-800 p-4 rounded-lg outline-none focus:border-red-600 text-white font-bold text-xl">
-                            </div>
-                        </div>
-                        <div class="bg-black/60 rounded-xl p-8 flex flex-col justify-center items-center border border-zinc-800">
-                            <span class="text-[9px] uppercase tracking-[3px] text-zinc-500 mb-2 font-bold">Final Payment</span>
-                            <div id="total" class="font-orbitron text-4xl font-black text-white neon-text mb-4">Rp 0</div>
-                            <div id="discInfo" class="hidden"><span class="bg-red-600 text-white text-[9px] px-3 py-1 font-bold rounded-full" id="discText"></span></div>
-                            <button onclick="order()" class="mt-6 w-full bg-white text-black py-4 rounded font-orbitron font-black text-sm uppercase hover:bg-red-600 hover:text-white transition-all tracking-tighter">EXECUTE ORDER <i class="fas fa-chevron-right ml-2"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <footer class="mt-20 py-10 text-center">
-            <p class="text-[10px] tracking-[10px] text-zinc-700 font-bold uppercase">&copy; 2026 LURAX JOKI | SUPREME COMMANDER CALEB</p>
-        </footer>
-    </div>
-
-    <script>
-        // --- INTRO DRAG ENGINE ---
-        const hilt = document.getElementById('hilt');
-        const bladePre = document.getElementById('blade-pre');
-        const intro = document.getElementById('intro-overlay');
-        let isDragging = false;
-        let startY;
-        let currentY = -70;
-
-        function startDrag(e) { 
-            isDragging = true; 
-            startY = e.touches ? e.touches[0].clientY : e.clientY; 
-            hilt.style.transition = 'none';
-        }
-        function doDrag(e) {
-            if (!isDragging) return;
-            const y = e.touches ? e.touches[0].clientY : e.clientY;
-            const deltaY = y - startY;
-            let newY = currentY + deltaY;
-            if (newY < -70) newY = -70;
-            hilt.style.top = `${newY}px`;
-            bladePre.style.height = `${Math.max(0, newY + 70)}px`;
+`;
             if (newY >= 180) unleashWeb();
         }
         function stopDrag() { 
